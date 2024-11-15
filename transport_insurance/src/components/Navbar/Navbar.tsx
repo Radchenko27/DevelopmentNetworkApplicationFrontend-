@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import styles from './Navbar.module.css'
+import styles from "./Navbar.module.css";
 // const Navbar = () => {
 //   return (
 //     <nav class="main-nav">
@@ -40,20 +40,16 @@ const NavBar: React.FC<NavBarProps> = ({
               {showDefaultLinks && (
                 <>
                   <li>
-                    <Link to="/drivers/" className="nav-link">
-                      Список товаров
+                    <Link to="/drivers/" className={styles.nav_link}>
+                      Список водителей
                     </Link>
                   </li>
                   <li>
-                    <a href="/about" className="nav-link">
-                      About
+                    <a href="/about" className={styles.nav_link}>
+                      О нас
                     </a>
                   </li>
-                  <li>
-                    <a href="/contact" className="nav-link">
-                      Contact
-                    </a>
-                  </li>
+                  
                 </>
               )}
 
@@ -68,29 +64,6 @@ const NavBar: React.FC<NavBarProps> = ({
 };
 
 export default NavBar;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // <nav>
 //   <ul>

@@ -146,7 +146,7 @@ const DriversListPage: React.FC = () => {
                   Подробнее{" "}
                 </Link>
 
-                <Button className={styles.driver_item__add_button_1} disabled>
+                <Button className={styles.driver_item__add_button} disabled>
                   +
                 </Button>
               </div>

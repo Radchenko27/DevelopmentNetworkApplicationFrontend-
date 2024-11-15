@@ -61,3 +61,18 @@
   font-size: 14px;
   transition: color 0.3s;
 }
+/* Стиль для элементов меню */
+.nav_link {
+  color: #002f87; /* Синий цвет текста */
+  /* text-decoration: none; */
+  font-family: "Helvetica", "Helvetica Neue", sans-serif; /* Без подчеркивания по умолчанию */
+  font-size: 16px;
+  margin: 0 15px;
+  transition: color 0.3s ease, text-decoration 0.3s ease; /* Плавный переход */
+}
+
+/* Эффект при наведении */
+.nav_link:hover {
+  color: #002f87; /* Светло-синий цвет текста при наведении */
+  text-decoration: underline; /* Подчеркивание текста */
+}

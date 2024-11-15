@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // import App from "./App.tsx";
 import HomeInsurancePage from "./pages/HomeInsurancePage.tsx";
 import DriversListPage from "./pages/DriversListPage/DriversListPage.tsx";
-// import DriverDetailPage from "./pages/DriverDetailPage.tsx";
+import DriverDetailPage from "./pages/DriverDetailPage/DriverDetailPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -16,10 +16,10 @@ const router = createBrowserRouter([
     path: "/drivers",
     element: <DriversListPage />,
   },
-  //   {
-  //     path: "/drivers/:id",
-  //     element: <DriverDetailPage/>,
-  //   },
+  {
+    path: "/drivers/:id",
+    element: <DriverDetailPage />,
+  },
 ]);
 
 createRoot(document.getElementById("root")!).render(

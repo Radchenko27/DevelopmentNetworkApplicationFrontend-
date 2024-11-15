@@ -2,6 +2,7 @@
   display: inline-block;
   /* cursor: pointer; Курсор в виде указателя при наведении */
   text-decoration: none;
+  font-family: "Helvetica", "Helvetica Neue", sans-serif;
   color: #ffffff;
   background-color: #002f87;
   border: none;
@@ -86,16 +87,19 @@
 .driver_item__title {
   font-size: 24px;
   margin-bottom: 0px;
+  font-family: "Helvetica", "Helvetica Neue", sans-serif;
 }
 
 .driver_item__description {
   font-size: 14px;
   color: #666;
+  font-family: "Helvetica", "Helvetica Neue", sans-serif;
 }
 
 .driver_item_buttons {
   display: flex;
   text-align: center;
+  font-family: "Helvetica", "Helvetica Neue", sans-serif;
   justify-content: space-between; /* Размещаем кнопки с отступом друг от друга */
   gap: 20px; /* Отступ между кнопками */
   margin-top: 0px; /* Отступ сверху для кнопок */
@@ -122,27 +126,12 @@
   background-color: #002f87; /* Синий фон при наведении */
   color: #ffffff; /* Белый цвет шрифта при наведении */
 }
+
 .driver_item__add_button {
   display: inline-flex; /* Используем flex для центрирования содержимого */
   justify-content: center; /* Центрируем по горизонтали */
-  align-items: center; /* Центрируем по вертикали */
-  width: 50px; /* Ширина кнопки */
-  height: 50px; /* Высота кнопки */
-  background-color: #002f87; /* Темно-синий фон (цвет ИНГОССТРАХ) */
-  border: 2px solid #ffffff; /* Белая окантовка */
-  border-radius: 50%; /* Круглая форма */
-  text-decoration: none; /* Убираем подчеркивание */
-  color: #ffffff; /* Белый цвет текста */
-  font-size: 24px; /* Размер шрифта для крестика */
-  font-weight: bold; /* Жирный шрифт */
-  transition: background-color 0.3s, transform 0.3s; /* Плавный переход для фона и трансформации */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Тень для эффекта глубины */
-}
-
-.driver_item__add_button_1 {
-  display: inline-flex; /* Используем flex для центрирования содержимого */
-  justify-content: center; /* Центрируем по горизонтали */
-  align-items: center; /* Центрируем по вертикали */
+  align-items: center;
+  font-family: "Helvetica", "Helvetica Neue", sans-serif; /* Центрируем по вертикали */
   width: 60px; /* Ширина кнопки */
   height: 50px; /* Высота кнопки */
   background-color: #002f87; /* Темно-синий фон (цвет ИНГОССТРАХ) */
