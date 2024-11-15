@@ -1,0 +1,165 @@
+.header__button {
+  display: inline-block;
+  /* cursor: pointer; Курсор в виде указателя при наведении */
+  text-decoration: none;
+  color: #ffffff;
+  background-color: #002f87;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 15px; /* Закругленные края кнопки */
+  transition: background-color 0.3s ease;
+}
+
+.header__button:hover {
+  background-color: #0056b3;
+  color: #ffffff; /* Изменение цвета при наведении */
+}
+
+.main__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+.main_title {
+  font-size: 40px;
+  margin: 15px;
+  align-items: center;
+  font-family: "Helvetica", "Helvetica Neue", sans-serif;
+  font-weight: bold;
+  color: #002f87;
+}
+
+/* Стили для services */
+.services {
+  padding: 10px 0px;
+  position: relative;
+}
+
+.services__container {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 колонки */
+  gap: 20px;
+  /* align-items: center; */
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.driver_item {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 20px;
+  justify-content: space-between;
+  text-align: center;
+  width: 90%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.5s ease-in-out;
+}
+
+.driver_item:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.driver_item__image img {
+  background-color: #f0f0f0; /* Фон для выделения шапки */
+  width: 100%; /* Задает ширину изображения под размер карточки */
+  height: 382px;
+  display: block; /* Убирает дополнительные отступы */
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+.driver_item_content {
+  flex-grow: 1;
+  display: flex; /*Включаем Flexbox */
+  flex-direction: column;
+  justify-content: center; /* Центрируем по горизонтали */
+  /* align-items: center;  */
+  place-items: center;
+}
+.driver_item__title {
+  font-size: 24px;
+  margin-bottom: 0px;
+}
+
+.driver_item__description {
+  font-size: 14px;
+  color: #666;
+}
+
+.driver_item_buttons {
+  display: flex;
+  text-align: center;
+  justify-content: space-between; /* Размещаем кнопки с отступом друг от друга */
+  gap: 20px; /* Отступ между кнопками */
+  margin-top: 0px; /* Отступ сверху для кнопок */
+}
+.driver_item__button {
+  align-self: flex-end;
+  display: inline-block; /* Делает ссылку похожей на блок, как кнопка */
+  text-align: center; /* Выравнивание текста по центру */
+  background-color: #ffffff; /* Белый фон кнопки */
+  color: #002f87; /* Синий цвет шрифта */
+  border: 1px solid #002f87; /* Синяя окантовка */
+  padding: 10px 20px; /* Внутренние отступы */
+  border-radius: 15px; /* Округление углов */
+  font-size: 16px; /* Размер шрифта */
+  font-weight: normal;
+  cursor: pointer; /* Курсор в виде указателя при наведении */
+  text-decoration: none; /* Убирает подчеркивание у ссылки */
+  transition: background-color 0.3s, color 0.3s;
+  width: 85%;
+  margin: 0px;
+}
+
+.driver_item__button:hover {
+  background-color: #002f87; /* Синий фон при наведении */
+  color: #ffffff; /* Белый цвет шрифта при наведении */
+}
+.driver_item__add_button {
+  display: inline-flex; /* Используем flex для центрирования содержимого */
+  justify-content: center; /* Центрируем по горизонтали */
+  align-items: center; /* Центрируем по вертикали */
+  width: 50px; /* Ширина кнопки */
+  height: 50px; /* Высота кнопки */
+  background-color: #002f87; /* Темно-синий фон (цвет ИНГОССТРАХ) */
+  border: 2px solid #ffffff; /* Белая окантовка */
+  border-radius: 50%; /* Круглая форма */
+  text-decoration: none; /* Убираем подчеркивание */
+  color: #ffffff; /* Белый цвет текста */
+  font-size: 24px; /* Размер шрифта для крестика */
+  font-weight: bold; /* Жирный шрифт */
+  transition: background-color 0.3s, transform 0.3s; /* Плавный переход для фона и трансформации */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Тень для эффекта глубины */
+}
+
+.driver_item__add_button_1 {
+  display: inline-flex; /* Используем flex для центрирования содержимого */
+  justify-content: center; /* Центрируем по горизонтали */
+  align-items: center; /* Центрируем по вертикали */
+  width: 60px; /* Ширина кнопки */
+  height: 50px; /* Высота кнопки */
+  background-color: #002f87; /* Темно-синий фон (цвет ИНГОССТРАХ) */
+  border: 2px solid #ffffff; /* Белая окантовка */
+  border-radius: 50%; /* Круглая форма */
+  text-decoration: none; /* Убираем подчеркивание */
+  color: #ffffff; /* Белый цвет текста */
+  font-size: 24px; /* Размер шрифта для крестика */
+  font-weight: bold; /* Жирный шрифт */
+  transition: background-color 0.3s, transform 0.3s; /* Плавный переход для фона и трансформации */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Тень для эффекта глубины */
+}
+.driver_item__add_button:hover {
+  background-color: #004a8c; /* Темно-синий цвет фона при наведении */
+  transform: scale(1.1); /* Цвет фона при наведении */
+}
+
+.driver_item__add_icon {
+  line-height: 1; /* Выравниваем крестик по центру */
+}
