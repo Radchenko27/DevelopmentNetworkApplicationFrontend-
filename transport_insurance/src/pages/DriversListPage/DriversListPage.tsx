@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Button, Spinner, Alert } from "react-bootstrap";
-// import Breadcrumb from "../components/Breadcrumb";
+import { Container, Row, Col, Button } from "react-bootstrap";
 
-import styles from "./DriversListPage.module.css";
+import LoadError from "../../components/LoadError/LoadError";
 import NavBar from "../../components/Navbar/Navbar";
 import Header from "../../components/Header/Header";
 import SearchForm from "../../components/SearchForm/SearchForm";
+import Breadcrumbs from "../../components/Breadcrumb";
 
-// import IngosLogo from "../components/Ingoslogo/Ingoslogo";
+import styles from "./DriversListPage.module.css";
 
 export interface Driver {
   id: number;
@@ -52,14 +52,16 @@ export const mockData: Driver[] = [
     status: "active",
   },
 ];
+
+const breadcrumbItems = [
+  { label: "Главная", path: "/" },
+  { label: "Список водителей", path: "/drivers" },
+];
 const defaultImageUrl = "http://127.0.0.1:9000/something/default.png";
 const DriversListPage: React.FC = () => {
   const [driversList, setdriversList] = useState<Driver[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  //   const [driverName, setDriverName] = useState('');
-  // const [filteredDrivers, setFilteredDrivers] = useState(driversList);
 
   useEffect(() => {
     console.log("Компонент DriversListPage был смонтирован!");
@@ -118,10 +120,13 @@ const DriversListPage: React.FC = () => {
       </NavBar>
       <div className={styles.main__container}>
         <h2 className={styles.main_title}>Автострахование онлайн</h2>
+        <Breadcrumbs items={breadcrumbItems} />
       </div>
+
       <Container className={styles.services}>
-        {loading && <Spinner animation="border" />}
-        {error && <Alert variant="danger">{error}</Alert>}
+        {/* {loading && <Spinner animation="border" />}
+        {error && <Alert variant="danger">{error}</Alert>} */}
+        <LoadError />
         <Row className={styles.services__container}>
           {driversList.map((driver) => (
             <Col key={driver.id} className={styles.driver_item} md={4}>

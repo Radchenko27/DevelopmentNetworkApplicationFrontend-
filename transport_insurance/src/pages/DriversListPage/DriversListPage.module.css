@@ -87,6 +87,7 @@
 .driver_item__title {
   font-size: 24px;
   margin-bottom: 0px;
+  margin-top: 20px;
   font-family: "Helvetica", "Helvetica Neue", sans-serif;
 }
 
@@ -111,7 +112,7 @@
   background-color: #ffffff; /* Белый фон кнопки */
   color: #002f87; /* Синий цвет шрифта */
   border: 1px solid #002f87; /* Синяя окантовка */
-  padding: 10px 20px; /* Внутренние отступы */
+  padding: 13px 20px; /* Внутренние отступы */
   border-radius: 15px; /* Округление углов */
   font-size: 16px; /* Размер шрифта */
   font-weight: normal;

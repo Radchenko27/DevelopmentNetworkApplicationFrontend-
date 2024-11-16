@@ -5,8 +5,11 @@ import { Driver, mockData } from "../DriversListPage/DriversListPage";
 import styles from "./DriverDetailPage.module.css";
 import NavBar from "../../components/Navbar/Navbar";
 import Header from "../../components/Header/Header";
+import Breadcrumbs from "../../components/Breadcrumb";
+
 
 const defaultImageUrl = "http://127.0.0.1:9000/something/default.png";
+
 const DriverDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState(false);
@@ -41,9 +44,14 @@ const DriverDetailPage: React.FC = () => {
         setLoading(false);
       }
     };
-
     fetchDriver();
   }, [id]);
+
+  const breadcrumbItems = [
+    { label: "Главная", path: "/" },
+    { label: "Список водителей", path: "/drivers" },
+    { label: driver?.name || "Загрузка...", path: "#" },
+  ];
 
   if (loading) {
     return (
@@ -81,6 +89,7 @@ const DriverDetailPage: React.FC = () => {
       </NavBar>
       <div className={styles.main__container}>
         <h2 className={styles.main_title}>Сведения о водителе</h2>
+        <Breadcrumbs items={breadcrumbItems} />
       </div>
       <Container className={styles.services}>
         <div className={styles.driver_details}>
