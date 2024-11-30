@@ -30,30 +30,44 @@
 
 /* Стили для services */
 .services {
-  padding: 10px 0px;
-  position: relative;
+  /* padding: 10px 20px; */
+  /* position: relative;
+  justify-content: space-between; */
 }
 
 .services__container2 {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 колонки */
   /* align-items: center; */
   justify-content: space-between;
   margin: 0 auto;
   max-width: 1160px;
   padding: 10px;
 }
+/* grid-template-columns: repeat(3, 1fr); 3 колонки */
 .services__container {
+  padding: 0px 15px;
   position: relative;
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 колонки */
-  gap: 20px;
-  /* align-items: center; */
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: min(30px, 5vw);
   margin: 0 auto;
   max-width: 1200px;
 }
+/* .services__container {
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-evenly;
+
+  gap: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+} */
 
 .driver_item {
   display: flex;
@@ -66,6 +80,8 @@
   width: 90%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.5s ease-in-out;
+  max-width: 320px;
+  min-width: 250px;
 }
 
 .driver_item:hover {
@@ -157,4 +173,50 @@
 
 .driver_item__add_icon {
   line-height: 1; /* Выравниваем крестик по центру */
+}
+
+@media (max-width: 968px) {
+  .services__container {
+    grid-template-columns: repeat(2, 1fr); /* 2 карточки в строке */
+    gap: 20px; /* Отступ между карточками */
+  }
+}
+
+/* При ширине экрана до 600px (1 карточка в строке) */
+@media (max-width: 700px) {
+  .services__container {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+
+  .driver_item {
+    width: 100%; /* Карточки растягиваются на всю ширину контейнера */
+    text-align: center; /* Выравнивание содержимого */
+  }
+  .main_title {
+    font-size: 30px;
+    margin: 5px;
+    align-items: center;
+    font-family: "Helvetica", "Helvetica Neue", sans-serif;
+    font-weight: bold;
+    color: #002f87;
+  }
+
+}
+
+@media (max-width: 550px) {
+  .main_title {
+    font-size: 20px;
+    margin: 5px;
+    align-items: center;
+    font-family: "Helvetica", "Helvetica Neue", sans-serif;
+    font-weight: bold;
+    color: #002f87;
+  }
 }

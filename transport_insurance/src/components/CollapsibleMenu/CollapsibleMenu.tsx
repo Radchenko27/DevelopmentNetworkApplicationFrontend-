@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import "./CollapsibleMenu.css"; // Подключение стилей
+import { Link } from 'react-router-dom';
+interface MenuItem {
+  name: string;
+  path: string;
+}
 
 interface CollapsibleMenuProps {
-  menuItems: string[];
+  menuItems: MenuItem[];
 }
 
 const CollapsibleMenu: React.FC<CollapsibleMenuProps> = ({ menuItems }) => {
@@ -33,7 +38,7 @@ const CollapsibleMenu: React.FC<CollapsibleMenuProps> = ({ menuItems }) => {
             <Nav className="nav_link">
               {menuItems.map((item, index) => (
                 <Nav.Item key={index}>
-                  <Nav.Link href="#">{item}</Nav.Link>
+                  <Link  className="nav_link_r" to={item.path}>{item.name}</Link>
                 </Nav.Item>
               ))}
             </Nav>

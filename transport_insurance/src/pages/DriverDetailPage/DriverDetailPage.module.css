@@ -57,6 +57,7 @@
   justify-content: space-between;
   margin: 0 auto;
   max-width: 1160px;
+  padding: 10px;
 }
 
 .driver_details {
@@ -154,5 +155,29 @@
 
   .driver_details__info {
     text-align: center;
+  }
+
+  .driver_details {
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 20px;
+    justify-content: space-between;
+    text-align: center;
+    width: 90%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.5s ease-in-out;
+    max-width: 320px;
+    min-width: 250px;
+  }
+
+  .driver_details__image img {
+    background-color: #f0f0f0; /* Фон для выделения шапки */
+    width: 100%; /* Задает ширину изображения под размер карточки */
+    height: 382px;
+    display: block; /* Убирает дополнительные отступы */
+    border-radius: 20px;
+    object-fit: cover;
   }
 }

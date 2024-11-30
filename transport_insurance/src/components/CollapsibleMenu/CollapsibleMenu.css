@@ -170,14 +170,32 @@
   list-style: none;
 }
 
-.nav_link .nav-link {
+
+.nav_link_r {
   color: #002f87; /* Цвет ссылок */
   text-decoration: none;
   font-size: 16px;
   transition: color 0.3s;
+
+}
+.nav_link_r:hover {
+  color: #0056b3;
 }
 
-.nav_link .nav-link:hover {
-  color: #0056b3; /* Цвет при наведении */
-  /* text-decoration: underline; */
+
+@media (max-width: 800px) {
+  .header__button {
+    display: inline-block;
+    /* cursor: pointer; Курсор в виде указателя при наведении */
+    text-decoration: none;
+    font-family: "Helvetica", "Helvetica Neue", sans-serif;
+    color: #ffffff;
+    background-color: #002f87;
+    border: none;
+    padding: 10px 20px;
+    font-size: 10px;
+    border-radius: 10px; /* Закругленные края кнопки */
+    transition: background-color 0.3s ease;
+    width: 100px;
+  }
 }

@@ -1,17 +1,21 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-// import '../Navbar.css';
 import styles from "./HomeInsurancePage.module.css";
 import Header from "../components/Header/Header";
 import NavBar from "../components/Navbar/Navbar";
 import IngosLogo from "../components/Ingoslogo/Ingoslogo";
 import CollapsibleMenu from "../components/CollapsibleMenu/CollapsibleMenu";
+import Carousel from "../components/Carousel/Carousel";
+
 const HomeInsurancePage: React.FC = () => {
   useEffect(() => {
     console.log("Компонент HomeInsurancePage был смонтирован!");
   }, []);
 
-  const menuItems = ["Главная", "О компании", "Услуги", "Контакты"];
+  const menuItems = [
+    { name: "Главная", path: "/" },
+    { name: "Список водителей", path: "/drivers" },
+  ];
   return (
     <>
       {" "}
@@ -37,6 +41,7 @@ const HomeInsurancePage: React.FC = () => {
             Список водителей
           </Link>
         </section>
+        {/* <Carousel /> */}
       </div>
     </>
   );

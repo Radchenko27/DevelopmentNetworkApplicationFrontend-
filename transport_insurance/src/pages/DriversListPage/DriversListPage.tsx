@@ -96,17 +96,11 @@ const DriversListPage: React.FC = () => {
       setLoading(false);
     }
   };
-  // Функция обработки поиска
-  // const handleSearch = (searchQuery: string) => {
-  //   const filtered = driversList.filter((driver) =>
-  //     driver.name.toLowerCase().includes(searchQuery.toLowerCase())
-  //   );
-  //   setFilteredDrivers(filtered);
-  // };
+
   const handleSearch = (searchQuery: string) => {
     fetchDrivers(searchQuery); // Обновляем список водителей с новым поисковым запросом
   };
-  const menuItems = ["Главная", "О компании", "Услуги", "Контакты"];
+  const menuItems = [{ name: "Главная", path: "/" },{ name: "Список водителей", path: "/drivers" },];
   return (
     <>
       <Header />

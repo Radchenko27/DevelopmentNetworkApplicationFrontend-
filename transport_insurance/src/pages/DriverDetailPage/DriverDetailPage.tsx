@@ -76,7 +76,7 @@ const DriverDetailPage: React.FC = () => {
       </Container>
     );
   }
-  const menuItems = ["Главная", "О компании", "Услуги", "Контакты"];
+  const menuItems = [{ name: "Главная", path: "/" },{ name: "Список водителей", path: "/drivers" },];
   return (
     <>
       <Header />
