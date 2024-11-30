@@ -12,11 +12,6 @@
   transition: background-color 0.3s ease;
 }
 
-.header__button:hover {
-  background-color: #0056b3;
-  color: #ffffff; /* Изменение цвета при наведении */
-}
-
 .main__container {
   display: flex;
   align-items: center;
@@ -26,7 +21,7 @@
 }
 .main_title {
   font-size: 40px;
-  margin: 15px;
+  margin: 5px;
   align-items: center;
   font-family: "Helvetica", "Helvetica Neue", sans-serif;
   font-weight: bold;
@@ -39,6 +34,16 @@
   position: relative;
 }
 
+.services__container2 {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 колонки */
+  /* align-items: center; */
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1160px;
+  padding: 10px;
+}
 .services__container {
   position: relative;
   display: grid;

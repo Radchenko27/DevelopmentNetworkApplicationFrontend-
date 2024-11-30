@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Container, Row, Col, Button, Spinner, Alert } from "react-bootstrap";
+import { Container, Spinner, Alert } from "react-bootstrap";
 import { Driver, mockData } from "../DriversListPage/DriversListPage";
 import styles from "./DriverDetailPage.module.css";
 import NavBar from "../../components/Navbar/Navbar";
 import Header from "../../components/Header/Header";
 import Breadcrumbs from "../../components/Breadcrumb";
-
-
-const defaultImageUrl = "http://127.0.0.1:9000/something/default.png";
+import IngosLogo from "../../components/Ingoslogo/Ingoslogo";
+import CollapsibleMenu from "../../components/CollapsibleMenu/CollapsibleMenu";
+const defaultImageUrl = "http://127.0.0.1:9000/test/images.png";
 
 const DriverDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -76,19 +76,18 @@ const DriverDetailPage: React.FC = () => {
       </Container>
     );
   }
-
+  const menuItems = ["Главная", "О компании", "Услуги", "Контакты"];
   return (
     <>
       <Header />
       <NavBar>
-        <li>
-          <a href="#" className={styles.header__button}>
-            Текущая страховка недоступна
-          </a>
-        </li>
+        <IngosLogo />
+        <CollapsibleMenu menuItems={menuItems} />
       </NavBar>
       <div className={styles.main__container}>
         <h2 className={styles.main_title}>Сведения о водителе</h2>
+      </div>
+      <div className={styles.services__container2}>
         <Breadcrumbs items={breadcrumbItems} />
       </div>
       <Container className={styles.services}>

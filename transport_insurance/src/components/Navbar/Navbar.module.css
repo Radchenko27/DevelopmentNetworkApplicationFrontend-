@@ -13,66 +13,46 @@
   justify-content: space-between;
   margin: 0 auto;
   max-width: 1200px;
+  width: 100%;
 }
 
 .header__container {
   display: flex;
   align-items: center; /* Вертикальное выравнивание элементов */
-  justify-content: flex-end; /* Логотип слева, основные элементы по центру */
+  justify-content: space-between;
+  list-style: none;
+  /* justify-content: flex-end; /* Логотип слева, основные элементы по центру */
   width: 100%;
   padding: 0 20px;
 }
-.main_nav {
-  display: flex;
-  align-items: center; /* Вертикальное выравнивание ссылок */
-  gap: 20px; /* Горизонтальные отступы между элементами внутри */
-  list-style: none; /* Убираем маркеры списка */
-  padding: 0;
-  margin: 0;
-}
+
 .main_nav__list {
   display: flex;
   align-items: center; /* Вертикальное выравнивание ссылок */
+  justify-content: space-between;
   gap: 20px; /* Горизонтальные отступы между элементами внутри */
   list-style: none; /* Убираем маркеры списка */
   padding: 0;
   margin: 0;
 }
-
-.main_nav__list li a {
-  text-decoration: none; /* Убираем подчеркивание ссылок */
-  /* color: #000000; Цвет текста ссылок */
-  font-size: 16px;
-  padding: 10px 15px; /* Внутренние отступы ссылок */
-  display: block;
+.main_nav__list .last-item {
+  margin-left: auto; /* Сдвигает элемент вправо */
 }
 
-.main_nav ul {
-  list-style: none;
+
+/* .main_nav ul {
+ 
   display: flex;
+  justify-content: space-between;
   gap: 20px;
   margin: 0;
   padding: 0;
-}
+} */
 
-.main_nav a {
-  /* color: #333; */
+/* .main_nav a {
+ 
   text-decoration: none;
   font-size: 14px;
   transition: color 0.3s;
-}
+} */
 /* Стиль для элементов меню */
-.nav_link {
-  color: #002f87; /* Синий цвет текста */
-  /* text-decoration: none; */
-  font-family: "Helvetica", "Helvetica Neue", sans-serif; /* Без подчеркивания по умолчанию */
-  font-size: 16px;
-  margin: 0 15px;
-  transition: color 0.3s ease, text-decoration 0.3s ease; /* Плавный переход */
-}
-
-/* Эффект при наведении */
-.nav_link:hover {
-  color: #002f87; /* Светло-синий цвет текста при наведении */
-  text-decoration: underline; /* Подчеркивание текста */
-}

@@ -6,7 +6,7 @@ const Header: React.FC = () => {
   return (
     <div className={styles.above__header__сontainer}>
       <div className={styles.above__header}>
-        <IngosLogo />
+        {/* <IngosLogo /> */}
       </div>
     </div>
   );

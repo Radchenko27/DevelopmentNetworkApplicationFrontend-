@@ -49,6 +49,16 @@
   margin: 0 auto;
   max-width: 1200px;
 }
+
+.services__container2 {
+  position: relative;
+  display: grid; /* 3 колонки */
+  /* align-items: center; */
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1160px;
+}
+
 .driver_details {
   background-color: #fff;
   border-radius: 20px;

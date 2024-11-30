@@ -4,66 +4,29 @@ import { Link } from "react-router-dom";
 import styles from "./HomeInsurancePage.module.css";
 import Header from "../components/Header/Header";
 import NavBar from "../components/Navbar/Navbar";
-
+import IngosLogo from "../components/Ingoslogo/Ingoslogo";
+import CollapsibleMenu from "../components/CollapsibleMenu/CollapsibleMenu";
 const HomeInsurancePage: React.FC = () => {
   useEffect(() => {
     console.log("Компонент HomeInsurancePage был смонтирован!");
   }, []);
+
+  const menuItems = ["Главная", "О компании", "Услуги", "Контакты"];
   return (
     <>
       {" "}
       <Header />
       <NavBar>
-        <li>{/* <SearchForm onSearch={handleSearch} /> */}</li>
-        <li>
-          <a href="#" className={styles.header__button}>
-            Текущая страховка недоступна
-          </a>
-        </li>
+        <IngosLogo />
+
+        {/* <SearchForm onSearch={handleSearch} /> */}
+
+        <CollapsibleMenu menuItems={menuItems} />
       </NavBar>
       {/* <div className="main__container">
         <h2 className="main_title">Автострахование онлайн</h2>
       </div> */}
       <div className={styles.main_container}>
-        {/* <section className={styles.services_section}>
-          <h2>Наши услуги</h2>
-          <div className={styles.services_grid}>
-            <div className={styles.service_card}>
-              <img
-                src="https://via.placeholder.com/300x200"
-                alt="Автострахование"
-              />
-              <h3>Автострахование</h3>
-              <p>Комплексные программы страхования для водителей.</p>
-              <a href="#" className={styles.service_link}>
-                Подробнее
-              </a>
-            </div>
-            <div className={styles.service_card}>
-              <img
-                src="https://via.placeholder.com/300x200"
-                alt="Медицинское страхование"
-              />
-              <h3>Медицинское страхование</h3>
-              <p>Забота о вашем здоровье и здоровье вашей семьи.</p>
-              <a href="#" className={styles.service_link}>
-                Подробнее
-              </a>
-            </div>
-            <div className="service-card">
-              <img
-                src="https://via.placeholder.com/300x200"
-                alt="Имущественное страхование"
-              />
-              <h3>Имущественное страхование</h3>
-              <p>Надежная защита вашего имущества от любых рисков.</p>
-              <a href="#" className={styles.service_link}>
-                Подробнее
-              </a>
-            </div>
-          </div>
-        </section> */}
-
         <section className={styles.additional_info}>
           <h2>Почему выбирают нас?</h2>
           <p>
