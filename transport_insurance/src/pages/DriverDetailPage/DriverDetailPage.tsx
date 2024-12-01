@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Container, Spinner, Alert } from "react-bootstrap";
-import { Driver, mockData } from "../DriversListPage/DriversListPage";
+import { Driver, mockData } from "../../mock/mockData";
 import styles from "./DriverDetailPage.module.css";
 import NavBar from "../../components/Navbar/Navbar";
 import Header from "../../components/Header/Header";

@@ -1,7 +1,9 @@
 .header {
   position: relative;
   padding: 10px;
-  padding-right: 10px;
+  padding-right
+  
+  : 10px;
   justify-content: space-between;
 }
 

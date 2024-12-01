@@ -11,48 +11,50 @@ import IngosLogo from "../../components/Ingoslogo/Ingoslogo";
 import CollapsibleMenu from "../../components/CollapsibleMenu/CollapsibleMenu";
 import styles from "./DriversListPage.module.css";
 
-export interface Driver {
-  id: number;
-  name: string;
-  certificate_number: string;
-  license: string;
-  experience: number;
-  characteristics: string;
-  image_url: string | null;
-  status: string;
-}
-export const mockData: Driver[] = [
-  {
-    id: 1,
-    name: "Радченко Дмитрий Сергеевич",
-    certificate_number: "32 12 344234",
-    license: "B",
-    experience: 2,
-    image_url: null,
-    characteristics: "лучший,",
-    status: "active",
-  },
-  {
-    id: 2,
-    name: "Радченко Дмитрий Сергеевич",
-    certificate_number: "32 12 344234",
-    license: "B",
-    experience: 2,
-    image_url: null,
-    characteristics: "лучший,",
-    status: "active",
-  },
-  {
-    id: 3,
-    name: "Радченко Дмитрий Сергеевич",
-    certificate_number: "32 12 344234",
-    license: "B",
-    experience: 2,
-    image_url: null,
-    characteristics: "лучший,",
-    status: "active",
-  },
-];
+import Slider from 'rc-slider'; 
+import { mockData, Driver } from '../../mock/mockData';
+// export interface Driver {
+//   id: number;
+//   name: string;
+//   certificate_number: string;
+//   license: string;
+//   experience: number;
+//   characteristics: string;
+//   image_url: string | null;
+//   status: string;
+// }
+// export const mockData: Driver[] = [
+//   {
+//     id: 1,
+//     name: "Радченко Дмитрий Сергеевич",
+//     certificate_number: "32 12 344234",
+//     license: "B",
+//     experience: 2,
+//     image_url: null,
+//     characteristics: "лучший,",
+//     status: "active",
+//   },
+//   {
+//     id: 2,
+//     name: "Радченко Дмитрий Сергеевич",
+//     certificate_number: "32 12 344234",
+//     license: "B",
+//     experience: 2,
+//     image_url: null,
+//     characteristics: "лучший,",
+//     status: "active",
+//   },
+//   {
+//     id: 3,
+//     name: "Радченко Дмитрий Сергеевич",
+//     certificate_number: "32 12 344234",
+//     license: "B",
+//     experience: 2,
+//     image_url: null,
+//     characteristics: "лучший,",
+//     status: "active",
+//   },
+// ];
 
 const breadcrumbItems = [
   { label: "Главная", path: "/" },
