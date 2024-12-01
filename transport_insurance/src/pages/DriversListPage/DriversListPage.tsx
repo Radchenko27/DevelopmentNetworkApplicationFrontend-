@@ -1,60 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col, Button, Form } from "react-bootstrap";
 
-// import LoadError from "../../components/LoadError/LoadError";
 import NavBar from "../../components/Navbar/Navbar";
 import Header from "../../components/Header/Header";
-import SearchForm from "../../components/SearchForm/SearchForm";
 import Breadcrumbs from "../../components/Breadcrumb";
 import IngosLogo from "../../components/Ingoslogo/Ingoslogo";
 import CollapsibleMenu from "../../components/CollapsibleMenu/CollapsibleMenu";
 import styles from "./DriversListPage.module.css";
 
-import Slider from 'rc-slider'; 
-import { mockData, Driver } from '../../mock/mockData';
-// export interface Driver {
-//   id: number;
-//   name: string;
-//   certificate_number: string;
-//   license: string;
-//   experience: number;
-//   characteristics: string;
-//   image_url: string | null;
-//   status: string;
-// }
-// export const mockData: Driver[] = [
-//   {
-//     id: 1,
-//     name: "Радченко Дмитрий Сергеевич",
-//     certificate_number: "32 12 344234",
-//     license: "B",
-//     experience: 2,
-//     image_url: null,
-//     characteristics: "лучший,",
-//     status: "active",
-//   },
-//   {
-//     id: 2,
-//     name: "Радченко Дмитрий Сергеевич",
-//     certificate_number: "32 12 344234",
-//     license: "B",
-//     experience: 2,
-//     image_url: null,
-//     characteristics: "лучший,",
-//     status: "active",
-//   },
-//   {
-//     id: 3,
-//     name: "Радченко Дмитрий Сергеевич",
-//     certificate_number: "32 12 344234",
-//     license: "B",
-//     experience: 2,
-//     image_url: null,
-//     characteristics: "лучший,",
-//     status: "active",
-//   },
-// ];
+import { mockData, Driver } from "../../mock/mockData";
+
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { setDriverName } from "../../slices/dataSlice";
 
 const breadcrumbItems = [
   { label: "Главная", path: "/" },
@@ -67,18 +26,27 @@ const DriversListPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const dispatch = useDispatch();
+  const driverName = useSelector(
+    (state: RootState) => state.ourData.driverName
+  );
+
   useEffect(() => {
+    const storedDriverName = localStorage.getItem("driverName");
+    if (storedDriverName) dispatch(setDriverName(storedDriverName));
+
     console.log("Компонент DriversListPage был смонтирован!");
+
     fetchDrivers();
   }, []);
 
-  const fetchDrivers = async (searchQuery: string = "") => {
+  const fetchDrivers = async () => {
     setLoading(true);
     setError(null);
 
     let url = "/drivers/";
-    if (searchQuery) {
-      url += `?driver_name=${searchQuery}`;
+    if (driverName) {
+      url += `?driver_name=${driverName}`;
     }
 
     try {
@@ -99,10 +67,21 @@ const DriversListPage: React.FC = () => {
     }
   };
 
-  const handleSearch = (searchQuery: string) => {
-    fetchDrivers(searchQuery); // Обновляем список водителей с новым поисковым запросом
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetchDrivers(); // Обновляем список водителей с новым поисковым запросом
   };
-  const menuItems = [{ name: "Главная", path: "/" },{ name: "Список водителей", path: "/drivers" },];
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    dispatch(setDriverName(value));
+    localStorage.setItem("driverName", value);
+  };
+
+  const menuItems = [
+    { name: "Главная", path: "/" },
+    { name: "Список водителей", path: "/drivers" },
+  ];
   return (
     <>
       <Header />
@@ -112,7 +91,22 @@ const DriversListPage: React.FC = () => {
       </NavBar>
       <div className={styles.main__container}>
         <h2 className={styles.main_title}>Автострахование онлайн</h2>
-        <SearchForm onSearch={handleSearch} />
+        {/* <SearchForm onSearch={handleSearch} /> */}
+        <div className={styles.search_block}>
+          <form onSubmit={handleSearch} className={styles.search_form}>
+            <input
+              type="text"
+              className={styles.search_input}
+              name="driver_name"
+              placeholder="Поиск по ФИО"
+              value={driverName || ""}
+              onChange={handleChange}
+            />
+            <button type="submit" className={styles.search_button}>
+              Искать
+            </button>
+          </form>
+        </div>
       </div>
 
       <Container className={styles.services}>
@@ -156,3 +150,6 @@ const DriversListPage: React.FC = () => {
 };
 
 export default DriversListPage;
+
+
+
