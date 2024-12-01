@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
 
 interface NavBarProps {
@@ -9,7 +8,7 @@ interface NavBarProps {
 
 const NavBar: React.FC<NavBarProps> = ({
   children,
-  showDefaultLinks = true,
+  // showDefaultLinks = true,
 }) => {
   return (
     <header className={styles.header}>

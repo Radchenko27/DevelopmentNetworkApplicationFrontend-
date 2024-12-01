@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 
 import NavBar from "../../components/Navbar/Navbar";
 import Header from "../../components/Header/Header";
@@ -23,8 +23,8 @@ const defaultImageUrl = "http://127.0.0.1:9000/test/images.png";
 
 const DriversListPage: React.FC = () => {
   const [driversList, setdriversList] = useState<Driver[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState<string | null>(null);
 
   const dispatch = useDispatch();
   const driverName = useSelector(
@@ -41,8 +41,8 @@ const DriversListPage: React.FC = () => {
   }, []);
 
   const fetchDrivers = async () => {
-    setLoading(true);
-    setError(null);
+    // setLoading(true);
+    // setError(null);
 
     let url = "/drivers/";
     if (driverName) {
@@ -60,10 +60,10 @@ const DriversListPage: React.FC = () => {
         throw new Error("Некорректный формат данных");
       }
     } catch (err) {
-      setError("Ошибка при загрузке данных, использую моковые данные");
+      // setError("Ошибка при загрузке данных, использую моковые данные");
       setdriversList(mockData); // Используем моки при ошибке
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -150,6 +150,3 @@ const DriversListPage: React.FC = () => {
 };
 
 export default DriversListPage;
-
-
-

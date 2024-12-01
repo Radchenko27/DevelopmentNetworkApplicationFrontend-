@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./SearchForm.module.css";
 
-import { useDispatch, useSelector } from "react-redux";
+
 // import { RootState } from "../../store";
 // import { setDriverName } from "../../slices/dataSlice";
 

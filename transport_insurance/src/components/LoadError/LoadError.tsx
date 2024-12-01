@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { Spinner, Alert } from "react-bootstrap"; // Импортируем только компоненты
 // import "bootstrap/dist/css/bootstrap.min.css"; // Импортируем стили для компонента
 import styles from "./LoadError.module.css";

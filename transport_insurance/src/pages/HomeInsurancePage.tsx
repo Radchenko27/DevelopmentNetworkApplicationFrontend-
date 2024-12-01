@@ -5,7 +5,6 @@ import Header from "../components/Header/Header";
 import NavBar from "../components/Navbar/Navbar";
 import IngosLogo from "../components/Ingoslogo/Ingoslogo";
 import CollapsibleMenu from "../components/CollapsibleMenu/CollapsibleMenu";
-import Carousel from "../components/Carousel/Carousel";
 
 const HomeInsurancePage: React.FC = () => {
   useEffect(() => {
