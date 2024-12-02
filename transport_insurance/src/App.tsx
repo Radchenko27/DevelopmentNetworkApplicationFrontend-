@@ -27,15 +27,35 @@
 
 // export default App
 
+import { useEffect } from "react";
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
-
+import { invoke } from "@tauri-apps/api/core";
 import DriversListPage from "./pages/DriversListPage/DriversListPage";
 import DriverDetailPage from "./pages/DriverDetailPage/DriverDetailPage";
 import HomeInsurancePage from "./pages/HomeInsurancePage";
 
 function App() {
+  useEffect(() => {
+    invoke("tauri", { cmd: "create" })
+      .then(() => {
+        console.log("Tauri launched");
+      })
+      .catch(() => {
+        console.log("Tauri not launched");
+      });
+    return () => {
+      invoke("tauri", { cmd: "close" })
+        .then(() => {
+          console.log("Tauri launched");
+        })
+        .catch(() => {
+          console.log("Tauri not launched");
+        });
+    };
+  }, []);
+
   return (
     <Provider store={store}>
       <Router>
