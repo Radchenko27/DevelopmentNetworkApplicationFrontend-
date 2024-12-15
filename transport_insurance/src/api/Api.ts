@@ -655,12 +655,19 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<void, void>({
+      this.request<
+        {
+          /** Идентификатор сессии пользователя, сохранённый в Redis */
+          session_id?: string;
+        },
+        void
+      >({
         path: `/users/login/`,
         method: "POST",
         body: data,
         secure: true,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
 
@@ -691,11 +698,18 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     usersRegisterCreate: (data: CustomUser, params: RequestParams = {}) =>
-      this.request<void, void>({
+      this.request<
+        {
+          /** Email пользователя */
+          email?: string;
+        },
+        void
+      >({
         path: `/users/register/`,
         method: "POST",
         body: data,
         secure: true,
+        format: "json",
         ...params,
       }),
 
