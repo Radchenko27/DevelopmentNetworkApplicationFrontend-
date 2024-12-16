@@ -3,6 +3,7 @@
     "@reduxjs/toolkit": "^2.4.0",
     "axios": "^1.7.8",
     "bootstrap": "^5.3.3",
+    "cors": "^2.8.5",
     "gh-pages": "^6.2.0",
     "http": "^0.0.1-security",
     "rc-slider": "^11.1.7",

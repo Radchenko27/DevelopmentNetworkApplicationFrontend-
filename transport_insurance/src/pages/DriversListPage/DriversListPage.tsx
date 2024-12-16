@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
-
+import axios from "axios";
 import NavBar from "../../components/Navbar/Navbar";
 import Header from "../../components/Header/Header";
 import Breadcrumbs from "../../components/Breadcrumb";
@@ -13,7 +13,13 @@ import { mockData, Driver } from "../../mock/mockData";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { setDriverName } from "../../slices/dataSlice";
+import {
+  setDriverName,
+  setQuantityOfDrivers,
+  setDraftInsuranceId,
+} from "../../slices/dataSlice";
+import { Api } from "../../api/Api";
+const api = new Api();
 
 const breadcrumbItems = [
   { label: "Главная", path: "/" },
@@ -23,10 +29,20 @@ const defaultImageUrl = "http://127.0.0.1:9000/test/images.png";
 
 const DriversListPage: React.FC = () => {
   const [driversList, setdriversList] = useState<Driver[]>([]);
+  // const [localDraftInsuranceId, setlocalDraftInsuranceId] = useState<
+  //   string | null
+  // >(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const dispatch = useDispatch();
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+  const sessionId = useSelector((state: RootState) => state.auth.sessionId);
+  const QuantityOfDrivers = useSelector(
+    (state: RootState) => state.ourData.QuantityOfDrivers
+  );
   const driverName = useSelector(
     (state: RootState) => state.ourData.driverName
   );
@@ -38,38 +54,86 @@ const DriversListPage: React.FC = () => {
     console.log("Компонент DriversListPage был смонтирован!");
 
     fetchDrivers();
-  }, []);
+  }, [isAuthenticated]);
 
   const fetchDrivers = async () => {
     setLoading(true);
     setError(null);
 
-    let url = "/drivers/";
-    if (driverName) {
-      url += `?driver_name=${driverName}`;
-    }
+    // let url = "/drivers/";
+    // if (driverName) {
+    //   url += `?driver_name=${driverName}`;
+    // }
 
+    // try {
+    //   const response = await fetch(url);
+    //   if (!response.ok) throw new Error("Ошибка при загрузке данных");
+    //   const data = await response.json();
+    //   // setdriversList(data.drivers);
+    //   if (Array.isArray(data.drivers)) {
+    //     setdriversList(data.drivers);
+    //   } else {
+    //     throw new Error("Некорректный формат данных");
+    //   }
+    // } catch (err) {
+    //   setError("Ошибка при загрузке данных, использую моковые данные");
+    //   setdriversList(mockData); // Используем моки при ошибке
+    // } finally {
+    //   setLoading(false);
+    // }
+
+    const params: Record<string, string | number> = {};
+    if (driverName) params.driver_name = driverName;
     try {
-      const response = await fetch(url);
-      if (!response.ok) throw new Error("Ошибка при загрузке данных");
-      const data = await response.json();
-      // setdriversList(data.drivers);
-      if (Array.isArray(data.drivers)) {
-        setdriversList(data.drivers);
-      } else {
-        throw new Error("Некорректный формат данных");
-      }
+      const response = await axios.get("/drivers/", { params });
+      const { drivers, quantity_of_drivers, current_insurance_id } =
+        response.data;
+
+      console.log("Ответ сервера:", response.data);
+
+      setdriversList(drivers);
+      dispatch(setQuantityOfDrivers(quantity_of_drivers));
+      dispatch(setDraftInsuranceId(current_insurance_id)); // Сохраняем draftOrderId в локальном состоянии
     } catch (err) {
-      setError("Ошибка при загрузке данных, использую моковые данные");
-      setdriversList(mockData); // Используем моки при ошибке
+      setError("Ошибка при загрузке данных");
+      console.error("Ошибка:", err);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    fetchDrivers(); // Обновляем список водителей с новым поисковым запросом
+  const handleAddToOrder = async (id: string) => {
+    if (!sessionId) {
+      alert(
+        "Пожалуйста, войдите в систему, чтобы добавить водителя в страховку."
+      );
+      return;
+    }
+
+    // Устанавливаем session_id в куки
+    // document.cookie = `session_id=${sessionId}; path=/; SameSite=None`;
+    console.log(document.cookie);
+    try {
+      //   await api.drivers.driversAddToDraftCreate(id, {
+      //     withCredentials: true,
+      //   });
+      const response = await axios.post(
+        `/drivers/${id}/add-to-draft/`,
+        { driverId: id },
+        // Пустое тело для POST-запроса
+        {
+          // withCredentials: true, // Включаем передачу куки
+          // headers: {
+          //   "Content-Type": "application/json",
+          // },
+        }
+      );
+      console.log("Успешно добавлено в черновик:", response.data);
+      await fetchDrivers();
+    } catch (error) {
+      setError("Ошибка при добавлении водителя в страховку");
+      console.error("Ошибка при добавлении водителя:", error);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,10 +142,16 @@ const DriversListPage: React.FC = () => {
     localStorage.setItem("driverName", value);
   };
 
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetchDrivers(); // Обновляем список водителей с новым поисковым запросом
+  };
+
   const menuItems = [
     { name: "Главная", path: "/" },
     { name: "Список водителей", path: "/drivers" },
   ];
+
   return (
     <>
       <Header />
@@ -137,7 +207,10 @@ const DriversListPage: React.FC = () => {
                   Подробнее{" "}
                 </Link>
 
-                <Button className={styles.driver_item__add_button} disabled>
+                <Button
+                  className={styles.driver_item__add_button}
+                  onClick={() => handleAddToOrder(driver.id.toString())}
+                >
                   +
                 </Button>
               </div>
@@ -150,6 +223,3 @@ const DriversListPage: React.FC = () => {
 };
 
 export default DriversListPage;
-
-
-

@@ -6,8 +6,11 @@ import store from './store';
 import DriversListPage from './pages/DriversListPage/DriversListPage';
 import DriverDetailPage from './pages/DriverDetailPage/DriverDetailPage';
 import HomeInsurancePage from './pages/HomeInsurancePage';
+import InsurancesList from './pages/InsurancesList/InsurancesList';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register'; 
+import Profile from './pages/Profile/Profile';
+
 
 const router = createBrowserRouter([
   {path: "/", element: <HomeInsurancePage />,},
@@ -15,6 +18,9 @@ const router = createBrowserRouter([
   {path: "/drivers/:id",element: <DriverDetailPage />,},
   { path: '/login', element: <Login /> },
   { path: '/register', element: <Register /> },
+  { path: '/profile', element: <Profile /> },
+  // { path: '/insurances/:pk', element: <OrderDetailDatacenter /> },
+  { path: '/insurances', element: <InsurancesList /> },
   ]
 );
 

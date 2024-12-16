@@ -32,7 +32,7 @@ const Login = () => {
         dispatch(
           login({ username: email, sessionId: response.data.session_id })
         );
-        document.cookie = `sessionid=${response.data.session_id}; path=/; SameSite=Strict`;
+        document.cookie = `session_id=${response.data.session_id}; path=/; SameSite=Strict`;
         navigate("/"); // Перенаправляем на главную страницу после успешного входа
       } else {
         setError("Не удалось войти. Проверьте данные и попробуйте снова.");

@@ -1,0 +1,256 @@
+.toast-notification {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 150px;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: "Arial", sans-serif;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    opacity: 1;
+  }
+
+  /* Скрытие уведомления */
+  .toast-notification.hide {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  /* Внутреннее содержимое уведомления */
+  .toast-content {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Иконка уведомления */
+  .toast-icon {
+    font-size: 24px;
+    color: #28a745; /* Зеленая галочка для активного статуса */
+    margin-right: 10px;
+  }
+
+  /* Текст сообщения */
+  .toast-message {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Метка статуса */
+  .status-label {
+    font-size: 14px;
+    font-weight: bond;
+    padding: 5px 10px;
+    border-radius: 15px;
+    color: white;
+  }
+
+  /* Статус "Активен" */
+  .status-label.active {
+    background-color: #28a745;/*  Зеленый цвет для активного статуса */
+  }
+
+
+  .main__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+  .main_title {
+    font-size: 40px;
+    margin: 15px;
+    align-items: center;
+    font-family: "Helvetica", "Helvetica Neue", sans-serif;
+    font-weight: bold;
+    color: #002f87;
+  }
+  
+  /* Стили для services */
+  .services {
+    padding: 10px 0px;
+    position: relative;
+  }
+
+  .driver-details {
+    background-color: #fff;
+    border-radius: 20px;
+    padding: 10px;
+    max-width: 1000px;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    transition: box-shadow 0.3s ease-in-out;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+  
+  .driver-details:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  .driver-details__info {
+    flex: 1;
+  }
+  
+  .driver-details__name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #002f87; /* Цвет текста как на ingos.ru */
+    margin-bottom: 10px;
+  }
+  
+  .driver-details__experience,
+  .driver-details__license,
+  .driver-details__certificate_number,
+  .driver-details__characteristics {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .driver-details__experience {
+    font-weight: bold;
+  }
+  
+  .driver-details__characteristics {
+    margin-top: 20px;
+    line-height: 1.5;
+    color: #666;
+  }
+  
+  /* Кнопка "Вернуться" */
+  .driver-details__back-button {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: #002f87; /* Цвет кнопки как на ingos.ru */
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .driver-details__back-button:hover {
+    background-color: #004bb5;
+  }
+  
+  /* Для мобильных устройств */
+  @media (max-width: 768px) {
+    .driver-details {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .driver-details__image img {
+      width: 150px;
+      height: 150px;
+    }
+  
+    .driver-details__info {
+      text-align: center;
+    }
+  }
+  
+  table {
+    width: 100%;
+    border-radius: 20px;
+    border-collapse: separate; /* Важно для округления углов */
+    border-spacing: 0;
+    margin: 20px 0;
+    font-size: 18px;
+    /* text-align: left; */
+    border-spacing: 10px;
+  }
+  
+  th,
+  td {
+    padding: 12px 0px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    border: none;
+    width: auto;
+  }
+  
+  th {
+    /* background-color: #f2f2f2; */
+    font-weight: bold;
+    color: #333;
+  }
+  td {
+    /* background-color: #f2f2f2; */
+    font-weight: normal;
+    color: #666;
+    text-align: left;
+  }
+  
+  .policy-info {
+    background-color: #002f87; /* Цвет как у Ингосстраха */
+    color: white;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .date-info {
+    text-align: right;
+    vertical-align: top;
+    padding: 0;
+  }
+  
+  table tr th:first-child,
+  table tr td:first-child {
+    padding-left: 20px;
+  }
+  
+  /* Дополнительные стили для текста и заголовков */
+  
+  th {
+    text-align: right;
+  }
+  
+
+  .insurance-detail {
+    gap: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+  }
+  
+  .insurance-detail-driver__info {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+  }
+  .container-insurance-driver-name {
+    width: 220px;
+    height: 100px;
+  }
+  
+  .insurance-detail__button-delete {
+    align-self: flex-end;
+    display: inline-block; /* Делает ссылку похожей на блок, как кнопка */
+    text-align: center; /* Выравнивание текста по центру */
+    background-color: #ffffff; /* Белый фон кнопки */
+    color: #b04a4a; /* Синий цвет шрифта */
+    border: 1px solid #b04a4a; /* Синяя окантовка */
+    padding: 10px 20px; /* Внутренние отступы */
+    border-radius: 15px; /* Округление углов */
+    font-size: 16px; /* Размер шрифта */
+    font-weight: normal;
+    cursor: pointer; /* Курсор в виде указателя при наведении */
+    text-decoration: none; /* Убирает подчеркивание у ссылки */
+    transition: background-color 0.3s, color 0.3s;
+    width: 150%;
+    margin: 10px 10px;
+  }
+  
+  .insurance-detail__button-delete:hover {
+    background-color: #b04a4a; /* Синий фон при наведении */
+    color: #ffffff; /* Белый цвет шрифта при наведении */
+  }

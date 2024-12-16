@@ -157,12 +157,12 @@ export interface CustomUser {
   password: string;
   /**
    * Is staff
-   * @default true
+   * @default false
    */
   is_staff?: boolean;
   /**
    * Is superuser
-   * @default true
+   * @default false
    */
   is_superuser?: boolean;
 }
