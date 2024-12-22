@@ -1,57 +1,61 @@
-import { Api, Insurance } from "../api/Api";
+import { Dispatch, SetStateAction } from "react";
+import axios from "axios";
 
-const api = new Api();
-
-export const loadInsurances = async (
-  sessionId: string | undefined,
-  setInsurances: (insurances: Insurance[]) => void,
-  setError: (error: string | null) => void,
-  setLoading: (loading: boolean) => void
+export const fetchInsuranceDetails = async (
+  isAuthenticated: boolean,
+  draftInsuranceId: string,
+  setError: Dispatch<SetStateAction<string | null>>,
+  setInsuranceDetails: Dispatch<SetStateAction<any>>
 ) => {
-  if (!sessionId) {
-    setError("Необходимо авторизоваться");
+  if ( !draftInsuranceId) {
+    setError("Необходимо авторизоваться и получить ID заказа.");
     return;
   }
-
-  setLoading(true);
   setError(null);
 
   try {
-    // Устанавливаем sessionId в куки
-    document.cookie = `sessionid=${sessionId}; path=/`; // Сохраняем sessionId в куки для передачи с запросом
+    const response = await axios.get(`/insurances/${draftInsuranceId.toString()}/`);
 
-    // Параметры запроса
-    const queryParams = {
-      insurance_status: "", // Фильтр по статусу
-      start_date: "", // Начальная дата
-      end_date: "", // Конечная дата
-    };
+    const {
+      id,
+      status,
+      type,
+      certificate_number,
+      certificate_series,
+      date_creation,
+      date_begin,
+      date_end,
+      date_formation,
+      date_completion,
+      car_brand,
+      car_model,
+      car_region,
+      moderator,
+      average_experience,
+      drivers,
+    } = response.data;
 
-    // Загружаем список всех заказов с параметрами фильтрации
-    const response = await api.insurances.insurancesList(queryParams, {
-      withCredentials: true, // Указываем, что сессия (куки) передается с запросом
+    setInsuranceDetails({
+      id,
+      status,
+      type,
+      certificate_number,
+      certificate_series,
+      date_creation,
+      date_begin,
+      date_end,
+      date_formation,
+      date_completion,
+      car_brand,
+      car_model,
+      car_region,
+      moderator,
+      average_experience,
+      drivers,
     });
-
-    // Логируем полный ответ от API
-    console.log("Полученный ответ от API:", response);
-
-    // Если заказов нет, просто передаем пустой массив в setOrders
-    if (!response.data || response.data.length === 0) {
-      setInsurances([]); // Пустой список заказов
-      return;
-    }
-
-    // Просто передаем данные как есть, используя типы из интерфейсов
-    const ordersData: Insurance[] = response.data;
-
-    // Логируем, как выглядит data после преобразования
-    console.log("Полученные данные заказов:", ordersData);
-
-    setInsurances(ordersData); // Сохраняем данные в состояние
   } catch (err) {
-    setError("Ошибка при загрузке списка заказов");
-    console.error("Ошибка загрузки:", err);
+    console.error("Ошибка:", err);
   } finally {
-    setLoading(false);
+    // setLoading(false);
   }
 };

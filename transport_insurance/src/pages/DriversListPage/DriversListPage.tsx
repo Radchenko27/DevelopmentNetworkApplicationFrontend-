@@ -29,9 +29,7 @@ const defaultImageUrl = "http://127.0.0.1:9000/test/images.png";
 
 const DriversListPage: React.FC = () => {
   const [driversList, setdriversList] = useState<Driver[]>([]);
-  // const [localDraftInsuranceId, setlocalDraftInsuranceId] = useState<
-  //   string | null
-  // >(null);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -43,6 +41,9 @@ const DriversListPage: React.FC = () => {
   const QuantityOfDrivers = useSelector(
     (state: RootState) => state.ourData.QuantityOfDrivers
   );
+  const draftInsuranceId = useSelector(
+    (state: RootState) => state.ourData.draftInsuranceId
+  );
   const driverName = useSelector(
     (state: RootState) => state.ourData.driverName
   );
@@ -52,7 +53,7 @@ const DriversListPage: React.FC = () => {
     if (storedDriverName) dispatch(setDriverName(storedDriverName));
 
     console.log("Компонент DriversListPage был смонтирован!");
-
+    console.log("isAuthenticated:", isAuthenticated);
     fetchDrivers();
   }, [isAuthenticated]);
 
@@ -60,27 +61,6 @@ const DriversListPage: React.FC = () => {
     setLoading(true);
     setError(null);
 
-    // let url = "/drivers/";
-    // if (driverName) {
-    //   url += `?driver_name=${driverName}`;
-    // }
-
-    // try {
-    //   const response = await fetch(url);
-    //   if (!response.ok) throw new Error("Ошибка при загрузке данных");
-    //   const data = await response.json();
-    //   // setdriversList(data.drivers);
-    //   if (Array.isArray(data.drivers)) {
-    //     setdriversList(data.drivers);
-    //   } else {
-    //     throw new Error("Некорректный формат данных");
-    //   }
-    // } catch (err) {
-    //   setError("Ошибка при загрузке данных, использую моковые данные");
-    //   setdriversList(mockData); // Используем моки при ошибке
-    // } finally {
-    //   setLoading(false);
-    // }
 
     const params: Record<string, string | number> = {};
     if (driverName) params.driver_name = driverName;
@@ -111,12 +91,9 @@ const DriversListPage: React.FC = () => {
     }
 
     // Устанавливаем session_id в куки
-    // document.cookie = `session_id=${sessionId}; path=/; SameSite=None`;
+
     console.log(document.cookie);
     try {
-      //   await api.drivers.driversAddToDraftCreate(id, {
-      //     withCredentials: true,
-      //   });
       const response = await axios.post(
         `/drivers/${id}/add-to-draft/`,
         { driverId: id },
@@ -157,7 +134,20 @@ const DriversListPage: React.FC = () => {
       <Header />
       <NavBar>
         <IngosLogo />
-        <CollapsibleMenu menuItems={menuItems} />
+        <CollapsibleMenu menuItems={menuItems}>
+          {!isAuthenticated ? (
+            <a href="#" className="header__button">
+              Текущая страховка недоступна
+            </a>
+          ) : (
+            <a
+              href={`insurances/${draftInsuranceId}`}
+              className="header__button"
+            >
+              Количество водителей: {QuantityOfDrivers}
+            </a>
+          )}
+        </CollapsibleMenu>
       </NavBar>
       <div className={styles.main__container}>
         <h2 className={styles.main_title}>Автострахование онлайн</h2>

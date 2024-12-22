@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import "./CollapsibleMenu.css"; // Подключение стилей
-import { Link } from 'react-router-dom';
-import {  useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 interface MenuItem {
   name: string;
@@ -11,21 +11,30 @@ interface MenuItem {
 
 interface CollapsibleMenuProps {
   menuItems: MenuItem[];
+  children?: React.ReactNode;
 }
 
-const CollapsibleMenu: React.FC<CollapsibleMenuProps> = ({ menuItems }) => {
-  
+const CollapsibleMenu: React.FC<CollapsibleMenuProps> = ({
+  menuItems,
+  children,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
-  const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
-  const QuantityOfDrivers = useSelector((state: RootState) => state.ourData.QuantityOfDrivers);
-  const draftInsuranceId = useSelector((state: RootState) => state.ourData.draftInsuranceId)
+  // const isAuthenticated = useSelector(
+  //   (state: RootState) => state.auth.isAuthenticated
+  // );
+  // const QuantityOfDrivers = useSelector(
+  //   (state: RootState) => state.ourData.QuantityOfDrivers
+  // );
+  // const draftInsuranceId = useSelector(
+  //   (state: RootState) => state.ourData.draftInsuranceId
+  // );
   const toggleMenu = () => {
     setIsOpen((prevState) => !prevState); // Переключение состояния меню
   };
 
   return (
     <div className="menu-container">
-      {!isAuthenticated ? (
+      {/* {!isAuthenticated ? (
       <a href="#" className="header__button">
         Текущая страховка недоступна
       </a>
@@ -34,7 +43,8 @@ const CollapsibleMenu: React.FC<CollapsibleMenuProps> = ({ menuItems }) => {
         <a href={`/insurances/${draftInsuranceId}`} className="header__button">
           Количество водителей: {QuantityOfDrivers}
         </a>
-      )}
+      )} */}
+      {children}
       <Navbar bg="light" expand="lg">
         <Container>
           {/* <Navbar.Brand href="#">Menu</Navbar.Brand> */}
@@ -50,7 +60,9 @@ const CollapsibleMenu: React.FC<CollapsibleMenuProps> = ({ menuItems }) => {
             <Nav className="nav_link">
               {menuItems.map((item, index) => (
                 <Nav.Item key={index}>
-                  <Link  className="nav_link_r" to={item.path}>{item.name}</Link>
+                  <Link className="nav_link_r" to={item.path}>
+                    {item.name}
+                  </Link>
                 </Nav.Item>
               ))}
             </Nav>
