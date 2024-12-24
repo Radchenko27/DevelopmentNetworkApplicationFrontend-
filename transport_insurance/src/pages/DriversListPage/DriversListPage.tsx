@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import axios from "axios";
 import NavBar from "../../components/Navbar/Navbar";
 import Header from "../../components/Header/Header";
@@ -61,7 +61,6 @@ const DriversListPage: React.FC = () => {
     setLoading(true);
     setError(null);
 
-
     const params: Record<string, string | number> = {};
     if (driverName) params.driver_name = driverName;
     try {
@@ -83,12 +82,7 @@ const DriversListPage: React.FC = () => {
   };
 
   const handleAddToOrder = async (id: string) => {
-    if (!sessionId) {
-      alert(
-        "Пожалуйста, войдите в систему, чтобы добавить водителя в страховку."
-      );
-      return;
-    }
+   
 
     // Устанавливаем session_id в куки
 
@@ -135,7 +129,8 @@ const DriversListPage: React.FC = () => {
       <NavBar>
         <IngosLogo />
         <CollapsibleMenu menuItems={menuItems}>
-          {!isAuthenticated ? (
+          {localStorage.getItem("isAuthenticated") !== "true" ||
+          !draftInsuranceId ? (
             <a href="#" className="header__button">
               Текущая страховка недоступна
             </a>

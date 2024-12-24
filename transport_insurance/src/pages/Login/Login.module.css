@@ -8,7 +8,15 @@
   border-radius: 8px;
   text-align: center;
 }
-
+.services__container2 {
+  position: relative;
+  display: grid;
+  /* align-items: center; */
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1160px;
+  padding: 10px;
+}
 h2 {
   font-size: 24px;
   margin-bottom: 20px;

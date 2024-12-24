@@ -11,6 +11,7 @@ const NavBar: React.FC<NavBarProps> = ({
   children,
   showDefaultLinks = true,
 }) => {
+  // const email = localStorage.getitem("email");
   return (
     <header className={styles.header}>
       <div className={styles.header__card}>

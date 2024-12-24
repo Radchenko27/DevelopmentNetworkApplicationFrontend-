@@ -79,7 +79,9 @@
   display: none; /* Скрыто по умолчанию */
   transform: translateY(-20px); /* Начальная позиция меню */
   opacity: 0; /* Меню будет прозрачным изначально */
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 /* Когда меню открыто, отображаем его с анимацией */
@@ -161,7 +163,9 @@
   gap: 20px; /* Промежутки между ссылками */
   padding: 0;
   margin: 0;
-  transition: color 0.3s ease, text-decoration 0.3s ease;
+  transition:
+    color 0.3s ease,
+    text-decoration 0.3s ease;
   font-family: "Helvetica", "Helvetica Neue", sans-serif;
   font-size: 16px;
 }
@@ -170,18 +174,26 @@
   list-style: none;
 }
 
-
 .nav_link_r {
   color: #002f87; /* Цвет ссылок */
   text-decoration: none;
   font-size: 16px;
   transition: color 0.3s;
-
 }
 .nav_link_r:hover {
   color: #0056b3;
 }
 
+.nav_link_r_2 {
+  color: #002f87; /* Цвет ссылок */
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s;
+  margin: 20px 0px;
+}
+.nav_link_r_2:hover {
+  color: #0056b3;
+}
 
 @media (max-width: 800px) {
   .header__button {

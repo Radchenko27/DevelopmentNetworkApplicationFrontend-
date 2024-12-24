@@ -1,0 +1,105 @@
+.main__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+.main_title {
+  font-size: 40px;
+  margin: 5px;
+  align-items: center;
+  font-family: "Helvetica", "Helvetica Neue", sans-serif;
+  font-weight: bold;
+  color: #002f87;
+}
+
+.services__container {
+  padding: 0px 15px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.services__container2 {
+  position: relative;
+  display: grid;
+  /* align-items: center; */
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 1160px;
+  padding: 10px;
+}
+
+.order-table {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.order-table-header {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr) auto; /* 5 колонок для данных + 1 для кнопки */
+  gap: 1rem;
+  padding: 1rem;
+  font-weight: bold;
+  background-color: #f1f1f1;
+  text-align: center;
+}
+
+.order-card {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr) auto; /* 5 колонок для данных + 1 для кнопки */
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.order-card:hover {
+  background-color: #f9f9f9;
+}
+
+.order-card-cell {
+  font-size: 0.9rem;
+  color: #333;
+  display: flex;
+  justify-content: center; /* Центрирование текста */
+  align-items: center;
+}
+
+.order-card-cell.clickable {
+  cursor: pointer;
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.order-card-cell.clickable:hover {
+  color: #0056b3;
+}
+
+/* Кнопка */
+.header__button {
+  display: inline-block;
+  text-decoration: none;
+  font-family: "Helvetica", "Helvetica Neue", sans-serif;
+  color: #ffffff;
+  background-color: #002f87;
+  border: none;
+  padding: 10px 20px;
+  font-size: 14px;
+  border-radius: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.header__button:hover {
+  background-color: #133daa;
+}

@@ -65,12 +65,14 @@ const Register = () => {
         <IngosLogo />
         <CollapsibleMenu menuItems={menuItems} />
       </Navbar>
-      <Breadcrumb
-        items={[
-          { label: "Главная", path: "/" },
-          { label: "Регистрация", path: "/register" },
-        ]}
-      />
+      <div className={styles.services__container2}>
+        <Breadcrumb
+          items={[
+            { label: "Главная", path: "/" },
+            { label: "Регистрация", path: "/register" },
+          ]}
+        />
+      </div>
 
       <div className={styles.register_container}>
         <h2>Регистрация</h2>

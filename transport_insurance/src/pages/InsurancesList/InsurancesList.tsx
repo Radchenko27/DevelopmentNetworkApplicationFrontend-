@@ -1,163 +1,165 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import { RootState } from "../../store";
-import { loadInsurances } from "../../InsuranceMethods/loadInsurances"; // Assuming this function loads order list
 import Navbar from "../../components/Navbar/Navbar";
-import Breadcrumb from "../../components/Breadcrumb";
-// import "../assets/style.css";
+import Breadcrumbs from "../../components/Breadcrumb";
+import Header from "../../components/Header/Header";
+import IngosLogo from "../../components/Ingoslogo/Ingoslogo";
+import CollapsibleMenu from "../../components/CollapsibleMenu/CollapsibleMenu";
+import style from "./InsurancesList.module.css";
 import { Insurance } from "../../api/Api";
-import React from "react";
 
-const defaultImageUrl = "/images/default.png";
+const defaultImageUrl = "http://127.0.0.1:9000/test/images.png";
 
 const InsurancesList = () => {
-//   const sessionId = useSelector((state: RootState) => state.auth.sessionId);
-//   const [orders, setOrders] = useState<DatacenterOrder[]>([]);
-//   const [expandedOrders, setExpandedOrders] = useState<{
-//     [key: number]: boolean;
-//   }>({});
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState<string | null>(null);
-//   const isAuthenticated = useSelector(
-//     (state: RootState) => state.auth.isAuthenticated
-//   );
+  const sessionId = useSelector((state: RootState) => state.auth.sessionId);
+  const [insurances, setInsurances] = useState<Insurance[]>([]);
+  //   const [expandedInsurances, setExpandedInsurances] = useState<{
+  //     [key: number]: boolean;
+  //   }>({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
 
-//   useEffect(() => {
-//     if (sessionId) {
-//       loadOrders(sessionId, setOrders, setError, setLoading);
-//     } else {
-//       setError("Необходимо авторизоваться");
-//     }
-//   }, [sessionId]);
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
 
-//   const handleToggle = (orderId: number) => {
-//     setExpandedOrders((prevState) => ({
-//       ...prevState,
-//       [orderId]: !prevState[orderId],
-//     }));
-//   };
+      try {
+        const response = await axios.get(`http://localhost:8000/insurances/`, {
+          withCredentials: true,
+        });
 
-//   const formatTime = (dateString: string | null) => {
-//     if (!dateString) return "Не указана";
-//     return new Date(dateString).toLocaleString();
-//   };
-return (<></>)
-//   return (
-//     <div className="order-list-container">
-//       <Navbar />
-//       <Breadcrumb
-//         items={[
-//           { label: "Главная", path: "/" },
-//           { label: "Список заказов", path: "/datacenter-orders/" },
-//         ]}
-//       />
+        const insurancesData: Insurance[] = Array.isArray(
+          response.data.insurances
+        )
+          ? response.data.insurances
+          : [];
 
-//       {!isAuthenticated ? (
-//         <div className="unauthorized-message">
-//           Пожалуйста, авторизуйтесь, чтобы увидеть заказы.
-//         </div>
-//       ) : (
-//         <>
-//           <h3 className="order-list-header">Список заказов:</h3>
-//           {orders.length > 0 ? (
-//             <table className="order-table">
-//               <thead>
-//                 <tr>
-//                   <th>№ Заказа</th>
-//                   <th>Статус</th>
-//                   <th>Дата создания</th>
-//                   <th>Дата формирования</th>
-//                   <th>Дата завершения</th>
-//                   <th>Адрес доставки</th>
-//                   <th>Время доставки</th>
-//                   <th>Сумма</th>
-//                   <th>Товары</th>
-//                 </tr>
-//               </thead>
-//               <tbody>
-//                 {orders.map((order) => (
-//                   <React.Fragment key={order.id}>
-//                     <tr>
-//                       <td
-//                         onClick={() => {
-//                           if (order.id !== undefined) {
-//                             handleToggle(order.id);
-//                           }
-//                         }}
-//                         className="order-table-cell clickable"
-//                       >
-//                         Заказ #{order.id}
-//                       </td>
-//                       <td className="order-table-cell">
-//                         {order.status === "draft"
-//                           ? "Черновик"
-//                           : order.status === "deleted"
-//                             ? "Удален"
-//                             : order.status === "formed"
-//                               ? "Сформирован"
-//                               : order.status === "completed"
-//                                 ? "Завершен"
-//                                 : "Отклонен"}
-//                       </td>
-//                       <td className="order-table-cell">
-//                         {formatTime(order.creation_date || null)}
-//                       </td>
-//                       <td className="order-table-cell">
-//                         {order.formation_date
-//                           ? formatTime(order.formation_date)
-//                           : "Не указана"}
-//                       </td>
-//                       <td className="order-table-cell">
-//                         {order.completion_date
-//                           ? formatTime(order.completion_date)
-//                           : "Не указана"}
-//                       </td>
-//                       <td className="order-table-cell">
-//                         {order.delivery_address || "Не указан"}
-//                       </td>
-//                       <td className="order-table-cell">
-//                         {order.delivery_time
-//                           ? formatTime(order.delivery_time)
-//                           : "Не указана"}
-//                       </td>
-//                       <td className="order-table-cell">
-//                         {order.total_price !== undefined
-//                           ? order.total_price
-//                           : "Не указана"}
-//                       </td>
-//                       <td className="order-table-cell">
-//                         <button className="toggle-button">
-//                           <Link
-//                             to={`/datacenter-orders/${order.id}`}
-//                             className="link-inside-button no-blue-link"
-//                           >
-//                             Подробности заказа
-//                           </Link>
-//                         </button>
-//                       </td>
-//                     </tr>
+        console.log("Загруженные данные:", insurancesData);
+        setInsurances(insurancesData);
+      } catch (err) {
+        console.error("Ошибка загрузки данных:", err);
+        setError("Не удалось загрузить данные");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-//                     {order.id !== undefined &&
-//                       expandedOrders[order.id] &&
-//                       order.datacenters?.length === 0 && (
-//                         <tr key={`no-services-${order.id}`}>
-//                           <td colSpan={9} className="service-row-cell">
-//                             Нет товаров в заказе
-//                           </td>
-//                         </tr>
-//                       )}
-//                   </React.Fragment>
-//                 ))}
-//               </tbody>
-//             </table>
-//           ) : (
-//             <p>Заказы отсутствуют</p>
-//           )}
-//         </>
-//       )}
-//     </div>
-//   );
+    fetchData();
+  }, []);
+  //   }, []);
+
+  const formatTime = (dateString: string | null) => {
+    if (!dateString) return "Не указана";
+    return new Date(dateString).toLocaleString();
+  };
+
+  const menuItems = [
+    { name: "Главная", path: "/" },
+    { name: "Список водителей", path: "/drivers" },
+  ];
+
+  const breadcrumbItems = [
+    { label: "Главная", path: "/" },
+    { label: "Список страховок", path: "/insurances" },
+  ];
+  return (
+    <>
+      <Header />
+      <Navbar>
+        <IngosLogo />
+        <CollapsibleMenu menuItems={menuItems} />
+      </Navbar>
+      {localStorage.getItem("isAuthenticated") === "true" ? (
+        <>
+          <div className={style.main__container}>
+            <h3 className={style.main_title}>Список страховок</h3>
+          </div>
+          <div className={style.services__container2}>
+            <Breadcrumbs items={breadcrumbItems} />
+          </div>
+          {insurances.length > 0 ? (
+            <div className={style.services__container}>
+              <div className={style["order-table"]}>
+                {/* Шапка таблицы */}
+                <div className={style["order-table-header"]}>
+                  <div className={style["order-card-cell"]}>
+                    Номер страховки
+                  </div>
+                  <div className={style["order-card-cell"]}>Статус</div>
+                  <div className={style["order-card-cell"]}>Дата создания</div>
+                  <div className={style["order-card-cell"]}>
+                    Дата формирования
+                  </div>
+                  <div className={style["order-card-cell"]}>
+                    Дата завершения
+                  </div>
+                  <div className={style["order-card-cell"]}>
+                    Ссылка на страховку
+                  </div>
+                </div>
+
+                {/* Список страховок */}
+                {insurances.map((insurance) => (
+                  <React.Fragment key={insurance.id}>
+                    <div className={style["order-card"]}>
+                      <div className={style["order-card-cell"]}>
+                        Страховка #{insurance.id}
+                      </div>
+                      <div className={style["order-card-cell"]}>
+                        {insurance.status === "draft"
+                          ? "Черновик"
+                          : insurance.status === "deleted"
+                            ? "Удалена"
+                            : insurance.status === "formed"
+                              ? "Сформирована"
+                              : insurance.status === "completed"
+                                ? "Завершена"
+                                : "Отклонена"}
+                      </div>
+                      <div className={style["order-card-cell"]}>
+                        {formatTime(insurance.date_creation || null)}
+                      </div>
+                      <div className={style["order-card-cell"]}>
+                        {insurance.date_formation
+                          ? formatTime(insurance.date_formation)
+                          : "Не указана"}
+                      </div>
+                      <div className={style["order-card-cell"]}>
+                        {insurance.date_completion
+                          ? formatTime(insurance.date_completion)
+                          : "Не указана"}
+                      </div>
+                      <div className={style["order-card-cell"]}>
+                        <a
+                          className={style.header__button}
+                          href={`/insurances/${insurance.id}`}
+                        >
+                          Подробности
+                        </a>
+                      </div>
+                    </div>
+                  </React.Fragment>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <p>Страховки отсутствуют</p>
+          )}
+        </>
+      ) : (
+        <div className="unauthorized-message">
+          Пожалуйста, авторизуйтесь, чтобы увидеть страховки.
+        </div>
+      )}
+    </>
+  );
 };
 
 export default InsurancesList;

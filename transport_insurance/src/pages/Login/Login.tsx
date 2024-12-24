@@ -32,6 +32,8 @@ const Login = () => {
         dispatch(
           login({ username: email, sessionId: response.data.session_id })
         );
+        localStorage.setItem("isAuthenticated", "true");
+        localStorage.setItem("email", email);
         document.cookie = `session_id=${response.data.session_id}; path=/; SameSite=Strict`;
         navigate("/"); // Перенаправляем на главную страницу после успешного входа
       } else {
@@ -54,12 +56,15 @@ const Login = () => {
         <IngosLogo />
         <CollapsibleMenu menuItems={menuItems} />
       </Navbar>
-      <Breadcrumb
-        items={[
-          { label: "Главная", path: "/" },
-          { label: "Вход", path: "/login" },
-        ]}
-      />
+      <div className={styles.services__container2}>
+        <Breadcrumb
+          items={[
+            { label: "Главная", path: "/" },
+            { label: "Вход", path: "/login" },
+          ]}
+        />
+      </div>
+
       <div className={styles.register_container}>
         <h2>Вход в систему</h2>
         <form onSubmit={handleSubmit}>

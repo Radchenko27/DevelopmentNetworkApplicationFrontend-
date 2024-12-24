@@ -63,6 +63,12 @@ const InsuranceDetails = () => {
           withCredentials: true,
         }
       );
+      // const response = await api.insurances.insurancesRead(draftInsuranceId, {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     session_id: sessionId,
+      //   },
+      // });
       const {
         id,
         status,
@@ -345,216 +351,222 @@ const InsuranceDetails = () => {
       <div className={style.main__container}>
         <h2 className={style.main_title}>Оформление</h2>
       </div>
-      <div className={style.services}>
-        <div className={style.services__container2}>
-          <Breadcrumbs items={breadcrumbItems} />
-        </div>
-        <div className={style.driver_details}>
-          <h2 className={style.driver_details__name}>
-            {insuranceDetails?.type}
-          </h2>
-          <p className={style.driver_details__name}>
-            Статус:{" "}
-            {insuranceDetails?.status === "draft"
-              ? "Черновик"
-              : insuranceDetails?.status === "deleted"
-                ? "Удален"
-                : insuranceDetails?.status === "formed"
-                  ? "Сформирован"
-                  : insuranceDetails?.status === "completed"
-                    ? "Завершен"
-                    : "Отклонен"}
-          </p>
-          <table>
-            <thead>
-              <tr>
-                <th colSpan={4} className={style.policy_info}>
-                  Данные полиса
-                </th>
-                <th rowSpan={2} colSpan={3} className={style.policy_info}>
-                  Срок действия
-                </th>
-                <th>Начало:</th>
-                <th>Конец:</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th>Номер:</th>
-                <td>{insuranceDetails?.certificate_number}</td>
-                <th>Серия:</th>
-                <td>{insuranceDetails?.certificate_series}</td>
-                <td className={style.date_info}>
-                  {insuranceDetails?.date_begin}
-                </td>
-                <td className={style.dateInfo}>{insuranceDetails?.date_end}</td>
-              </tr>
-              <tr>
-                <th colSpan={9} className={style.policy_info}>
-                  Данные автомобиля
-                </th>
-              </tr>
-              <tr>
-                <th>Марка:</th>
-                <td>{insuranceDetails?.car_brand}</td>
-                <th>Модель:</th>
-                <td>{insuranceDetails?.car_model}</td>
-                <td></td>
-                <th>Номер:</th>
-                <td>{insuranceDetails?.car_region}</td>
-                <th>Регион:</th>
-                <td>{insuranceDetails?.car_region}</td>
-              </tr>
-            </tbody>
-          </table>
-          <h2 className={style.driver_details__name}>Список водителей</h2>
+      {localStorage.getItem("isAuthenticated") === "true" ? (
+        <div className={style.services}>
+          <div className={style.services__container2}>
+            <Breadcrumbs items={breadcrumbItems} />
+          </div>
+          <div className={style.driver_details}>
+            <h2 className={style.driver_details__name}>
+              {insuranceDetails?.type}
+            </h2>
+            <p className={style.driver_details__name}>
+              Статус:{" "}
+              {insuranceDetails?.status === "draft"
+                ? "Черновик"
+                : insuranceDetails?.status === "deleted"
+                  ? "Удален"
+                  : insuranceDetails?.status === "formed"
+                    ? "Сформирован"
+                    : insuranceDetails?.status === "completed"
+                      ? "Завершен"
+                      : "Отклонен"}
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th colSpan={4} className={style.policy_info}>
+                    Данные полиса
+                  </th>
+                  <th rowSpan={2} colSpan={3} className={style.policy_info}>
+                    Срок действия
+                  </th>
+                  <th>Начало:</th>
+                  <th>Конец:</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>Номер:</th>
+                  <td>{insuranceDetails?.certificate_number}</td>
+                  <th>Серия:</th>
+                  <td>{insuranceDetails?.certificate_series}</td>
+                  <td className={style.date_info}>
+                    {insuranceDetails?.date_begin}
+                  </td>
+                  <td className={style.dateInfo}>
+                    {insuranceDetails?.date_end}
+                  </td>
+                </tr>
+                <tr>
+                  <th colSpan={9} className={style.policy_info}>
+                    Данные автомобиля
+                  </th>
+                </tr>
+                <tr>
+                  <th>Марка:</th>
+                  <td>{insuranceDetails?.car_brand}</td>
+                  <th>Модель:</th>
+                  <td>{insuranceDetails?.car_model}</td>
+                  <td></td>
+                  <th>Номер:</th>
+                  <td>{insuranceDetails?.car_region}</td>
+                  <th>Регион:</th>
+                  <td>{insuranceDetails?.car_region}</td>
+                </tr>
+              </tbody>
+            </table>
+            <h2 className={style.driver_details__name}>Список водителей</h2>
 
-          {/* Проверка, чтобы избежать ошибок при рендере списка */}
-          {Array.isArray(insuranceDetails?.drivers) &&
-          insuranceDetails?.drivers.length > 0 ? (
-            insuranceDetails.drivers.map((driverInsurance, index) => (
-              <div className={style.driver_details} key={index}>
-                <div className={style.driver_details__image}>
-                  <img
-                    src={driverInsurance.driver.image_url || defaultImageUrl}
-                    alt="Фото водителя"
-                  />
-                </div>
-                <div className={style.insurance_detail_driver__info}>
-                  <div className={style.container_insurance_driver_name}>
-                    <h2 className={style.driver_details__name}>ФИО водителя</h2>
-                    <p className={style.driver_details__experience}>
-                      {driverInsurance.driver.name}
-                    </p>
-                    {insuranceDetails.status === "draft" && (
-                      <>
-                        <button
-                          className={style.driver_detail__button_delete}
-                          onClick={() => {
-                            if (
-                              insuranceDetails?.id &&
-                              driverInsurance.driver?.id
-                            ) {
-                              handleDeletedriver(
-                                insuranceDetails.id.toString(),
-                                driverInsurance.driver.id.toString(),
-                                setError
-                              );
-                            } else {
-                              setError(
-                                "Невозможно удалить водителя: отсутствует ID."
-                              );
-                            }
-                          }}
-                        >
-                          Удалить
-                        </button>
-                      </>
-                    )}
+            {/* Проверка, чтобы избежать ошибок при рендере списка */}
+            {Array.isArray(insuranceDetails?.drivers) &&
+            insuranceDetails?.drivers.length > 0 ? (
+              insuranceDetails.drivers.map((driverInsurance, index) => (
+                <div className={style.driver_details} key={index}>
+                  <div className={style.driver_details__image}>
+                    <img
+                      src={driverInsurance.driver.image_url || defaultImageUrl}
+                      alt="Фото водителя"
+                    />
                   </div>
-                  <div className={style.container_insurance_driver_name}>
-                    <h2 className={style.driver_details__name}>
-                      Стаж вождения
-                    </h2>
-                    <p className={style.driver_details__experience}>
-                      {driverInsurance.driver.experience}
-                    </p>
-                    {insuranceDetails.status === "draft" && (
-                      <>
-                        <button
-                          className={style.driver_detail__button_update}
-                          onClick={() => {
-                            if (
-                              insuranceDetails?.id &&
-                              driverInsurance.driver?.id
-                            ) {
-                              handleUpdatedriver(
-                                insuranceDetails.id.toString(),
-                                driverInsurance.driver.id.toString(),
-                                setError
-                              );
-                            } else {
-                              setError(
-                                "Невозможно удалить водителя: отсутствует ID."
-                              );
-                            }
-                          }}
-                        >
-                          Обновить
-                        </button>
-                      </>
-                    )}
-                  </div>
-                  <div className={style.container_insurance_driver_name}>
-                    <h2 className={style.driver_details__name}>
-                      Номер удостоверения
-                    </h2>
-                    <p className={style.driver_details__certificate_number}>
-                      {driverInsurance.driver.certificate_number}
-                    </p>
-                    {driverInsurance.owner && (
-                      <div className={style.toast_notification}>
-                        <div className={style.toast_сontent}>
-                          <span className={style.toast_icon}>&#x2714;</span>
-                          <div className={style.toast_message}>
-                            <span
-                              className={`${style.status_label} ${style.active}`}
-                            >
-                              Владелец
-                            </span>
+                  <div className={style.insurance_detail_driver__info}>
+                    <div className={style.container_insurance_driver_name}>
+                      <h2 className={style.driver_details__name}>
+                        ФИО водителя
+                      </h2>
+                      <p className={style.driver_details__experience}>
+                        {driverInsurance.driver.name}
+                      </p>
+                      {insuranceDetails.status === "draft" && (
+                        <>
+                          <button
+                            className={style.driver_detail__button_delete}
+                            onClick={() => {
+                              if (
+                                insuranceDetails?.id &&
+                                driverInsurance.driver?.id
+                              ) {
+                                handleDeletedriver(
+                                  insuranceDetails.id.toString(),
+                                  driverInsurance.driver.id.toString(),
+                                  setError
+                                );
+                              } else {
+                                setError(
+                                  "Невозможно удалить водителя: отсутствует ID."
+                                );
+                              }
+                            }}
+                          >
+                            Удалить
+                          </button>
+                        </>
+                      )}
+                    </div>
+                    <div className={style.container_insurance_driver_name}>
+                      <h2 className={style.driver_details__name}>
+                        Стаж вождения
+                      </h2>
+                      <p className={style.driver_details__experience}>
+                        {driverInsurance.driver.experience}
+                      </p>
+                      {insuranceDetails.status === "draft" && (
+                        <>
+                          <button
+                            className={style.driver_detail__button_update}
+                            onClick={() => {
+                              if (
+                                insuranceDetails?.id &&
+                                driverInsurance.driver?.id
+                              ) {
+                                handleUpdatedriver(
+                                  insuranceDetails.id.toString(),
+                                  driverInsurance.driver.id.toString(),
+                                  setError
+                                );
+                              } else {
+                                setError(
+                                  "Невозможно удалить водителя: отсутствует ID."
+                                );
+                              }
+                            }}
+                          >
+                            Обновить
+                          </button>
+                        </>
+                      )}
+                    </div>
+                    <div className={style.container_insurance_driver_name}>
+                      <h2 className={style.driver_details__name}>
+                        Номер удостоверения
+                      </h2>
+                      <p className={style.driver_details__certificate_number}>
+                        {driverInsurance.driver.certificate_number}
+                      </p>
+                      {driverInsurance.owner && (
+                        <div className={style.toast_notification}>
+                          <div className={style.toast_сontent}>
+                            <span className={style.toast_icon}>&#x2714;</span>
+                            <div className={style.toast_message}>
+                              <span
+                                className={`${style.status_label} ${style.active}`}
+                              >
+                                Владелец
+                              </span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    )}
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))
-          ) : (
-            <p>Нет водителей для отображения.</p>
-          )}
-
-          <hr />
-          <div className={style.insurance_detail_driver__info}>
-            {insuranceDetails?.status === "draft" && (
-              // <form
-              //   method="POST"
-              //   action={`/update_insurance_status/${insuranceDetails?.type}`}
-              // >
-              <button
-                type="submit"
-                // name="action"
-                // value="delete"
-                onClick={() => {
-                  if (insuranceDetails?.id) {
-                    handleSubmitInsurance(
-                      insuranceDetails.id.toString(),
-                      // driverInsurance.driver.id.toString(),
-                      setError
-                    );
-                  } else {
-                    setError("Невозможно удалить водителя: отсутствует ID.");
-                  }
-                }}
-                className={style.insurance_detail__button_delete}
-              >
-                Оформить страховку
-              </button>
-              // </form>
-            )}
-
-            {insuranceDetails?.status !== "completed" ? (
-              <h2 className={style.driver_details2__name}>
-                Средний стаж: рассчитывается...
-              </h2>
+              ))
             ) : (
-              <h2 className={style.driver_details2__name}>
-                Средний стаж: {insuranceDetails.average_experience}
-              </h2>
+              <p>Нет водителей для отображения.</p>
             )}
+
+            <hr />
+            <div className={style.insurance_detail_driver__info}>
+              {insuranceDetails?.status === "draft" && (
+                <button
+                  type="submit"
+                  // name="action"
+                  // value="delete"
+                  onClick={() => {
+                    if (insuranceDetails?.id) {
+                      handleSubmitInsurance(
+                        insuranceDetails.id.toString(),
+                        // driverInsurance.driver.id.toString(),
+                        setError
+                      );
+                    } else {
+                      setError("Невозможно удалить водителя: отсутствует ID.");
+                    }
+                  }}
+                  className={style.insurance_detail__button_delete}
+                >
+                  Оформить страховку
+                </button>
+                // </form>
+              )}
+
+              {insuranceDetails?.status !== "completed" ? (
+                <h2 className={style.driver_details2__name}>
+                  Средний стаж: рассчитывается...
+                </h2>
+              ) : (
+                <h2 className={style.driver_details2__name}>
+                  Средний стаж: {insuranceDetails.average_experience}
+                </h2>
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="unauthorized-message">
+          Пожалуйста, авторизуйтесь, чтобы увидеть страховки.
+        </div>
+      )}
     </>
   );
 };
