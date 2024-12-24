@@ -52,7 +52,7 @@ const CollapsibleMenu: React.FC<CollapsibleMenuProps> = ({
       setMenuItems([
         { name: "Главная", path: "/" },
         { name: "Вход", path: "/login" },
-        { name: "Ренистрация", path: "/register" },
+        { name: "Регистрация", path: "/register" },
       ]);
     }
   }, [isAuthenticated]);
@@ -91,7 +91,7 @@ const CollapsibleMenu: React.FC<CollapsibleMenuProps> = ({
 
   return (
     <>
-    <div>{localStorage.getItem("email")}</div>
+      <div>{localStorage.getItem("email")}</div>
       <div className="menu-container">
         {children}
         <Navbar bg="light" expand="lg">
