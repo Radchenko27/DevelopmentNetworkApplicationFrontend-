@@ -10,7 +10,7 @@ import CollapsibleMenu from "../../components/CollapsibleMenu/CollapsibleMenu";
 import styles from "./DriversListPage.module.css";
 
 import { mockData, Driver } from "../../mock/mockData";
-
+import { dest_api } from "../../target_config";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { setDriverName } from "../../slices/dataSlice";
@@ -44,7 +44,7 @@ const DriversListPage: React.FC = () => {
     // setLoading(true);
     // setError(null);
 
-    let url = "/drivers/";
+    let url = `${dest_api}/drivers/`;
     if (driverName) {
       url += `?driver_name=${driverName}`;
     }

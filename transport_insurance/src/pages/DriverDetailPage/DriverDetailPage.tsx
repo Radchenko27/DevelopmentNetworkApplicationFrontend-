@@ -6,6 +6,7 @@ import styles from "./DriverDetailPage.module.css";
 import NavBar from "../../components/Navbar/Navbar";
 import Header from "../../components/Header/Header";
 import Breadcrumbs from "../../components/Breadcrumb";
+import { dest_api } from "../../target_config";
 import IngosLogo from "../../components/Ingoslogo/Ingoslogo";
 import CollapsibleMenu from "../../components/CollapsibleMenu/CollapsibleMenu";
 const defaultImageUrl = "http://127.0.0.1:9000/test/images.png";
@@ -22,7 +23,7 @@ const DriverDetailPage: React.FC = () => {
       setError(null);
 
       try {
-        const response = await fetch(`/drivers/${id}/`);
+        const response = await fetch(`${dest_api}/drivers/${id}/`);
         if (!response.ok) {
           throw new Error(`Ошибка загрузки данных: ${response.statusText}`);
         }
@@ -76,7 +77,10 @@ const DriverDetailPage: React.FC = () => {
       </Container>
     );
   }
-  const menuItems = [{ name: "Главная", path: "/" },{ name: "Список водителей", path: "/drivers" },];
+  const menuItems = [
+    { name: "Главная", path: "/" },
+    { name: "Список водителей", path: "/drivers" },
+  ];
   return (
     <>
       <Header />
