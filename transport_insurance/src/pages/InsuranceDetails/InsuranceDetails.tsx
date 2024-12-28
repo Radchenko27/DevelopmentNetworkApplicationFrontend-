@@ -12,6 +12,7 @@ import IngosLogo from "../../components/Ingoslogo/Ingoslogo";
 import CollapsibleMenu from "../../components/CollapsibleMenu/CollapsibleMenu";
 import axios from "axios";
 import { Api } from "../../api/Api";
+import { useNavigate } from "react-router-dom";
 
 const api = new Api();
 
@@ -19,14 +20,27 @@ const defaultImageUrl = "http://127.0.0.1:9000/test/images.png";
 
 const InsuranceDetails = () => {
   const sessionId = useSelector((state: RootState) => state.auth.sessionId);
-  const [insuranceDetails, setInsuranceDetails] = useState<Insurance | null>(
-    null
-  );
+  const [insuranceDetails, setInsuranceDetails] = useState<Insurance | null>();
   const [error, setError] = useState<string | null>(null);
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
   const { id } = useParams<{ id: string }>();
+  type EditableFields = Partial<
+    Pick<
+      Insurance,
+      | "certificate_number"
+      | "certificate_series"
+      | "car_brand"
+      | "car_model"
+      | "car_region"
+      | "date_end"
+      | "date_begin"
+    >
+  >;
+  const [editableFields, setEditableFields] = useState<EditableFields>({});
+  // const [editableFields, setEditableFields] = useState<Partial<Pick<Insurance, 'certificate_number' | 'certificate_series' | 'car_brand' | 'car_model' | 'car_region' | "date_end" | "date_begin" >>>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("isAuthenticated:", isAuthenticated);
@@ -197,7 +211,6 @@ const InsuranceDetails = () => {
     }
     // const api = new Api();
     try {
-      // Удаляем товар из заказа
       await axios.put(
         `http://localhost:8000/insurances/${draftInsuranceId}/drivers/${driverId}/update/`,
         { owner: 1 },
@@ -259,6 +272,32 @@ const InsuranceDetails = () => {
     }
   };
 
+  const handleDeleteInsurance = async (
+    draftInsuranceId: number | string,
+    setError: Dispatch<SetStateAction<string | null>>
+  ): Promise<void> => {
+    if (!draftInsuranceId) {
+      setError("ID заказа отсутствует.");
+      return;
+    }
+    const api = new Api();
+
+    try {
+      // Подтверждаем заказ
+      await axios.delete(
+        `http://localhost:8000/insurances/${draftInsuranceId}/delete/`,
+        {
+          withCredentials: true,
+        }
+      );
+      navigate("/drivers");
+
+      setError(null);
+    } catch (err) {
+      setError("Ошибка при обновлении или подтверждении заказа");
+      console.error("Ошибка:", err);
+    }
+  };
   const handleSubmitInsurance = async (
     draftInsuranceId: number | string,
     setError: Dispatch<SetStateAction<string | null>>
@@ -268,9 +307,23 @@ const InsuranceDetails = () => {
       setError("ID заказа отсутствует.");
       return;
     }
+    if (!areFieldsValid(editableFields)) {
+      alert("Заполните все обязательные поля");
+      return;
+    }
     const api = new Api();
 
     try {
+      await axios.put(
+        `http://localhost:8000/insurances/${draftInsuranceId}/update/`,
+        editableFields,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
       // Подтверждаем заказ
       await axios.put(
         `http://localhost:8000/insurances/${draftInsuranceId}/submit/`,
@@ -327,7 +380,7 @@ const InsuranceDetails = () => {
         drivers,
         creator,
       });
-
+      navigate("/insurances");
       setError(null);
     } catch (err) {
       setError("Ошибка при обновлении или подтверждении заказа");
@@ -341,6 +394,28 @@ const InsuranceDetails = () => {
     { label: `Страховка: ${id}`, path: `/insurances/${id}` },
   ];
 
+  const updateInsuranceDetails = (
+    key: keyof typeof editableFields,
+    value: string | null
+  ) => {
+    setEditableFields((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+  const areFieldsValid = (fields: Partial<Insurance>): boolean => {
+    const requiredFields = [
+      "certificate_number",
+      "certificate_series",
+      "car_brand",
+      "car_model",
+      "car_region",
+      "date_begin",
+      "date_end",
+    ];
+
+    return requiredFields.every((field) => !!fields[field as keyof Insurance]);
+  };
   return (
     <>
       <Header />
@@ -378,24 +453,61 @@ const InsuranceDetails = () => {
                   <th colSpan={4} className={style.policy_info}>
                     Данные полиса
                   </th>
-                  <th rowSpan={2} colSpan={3} className={style.policy_info}>
+                  <th rowSpan={4} colSpan={4} className={style.policy_info}>
                     Срок действия
                   </th>
-                  <th>Начало:</th>
-                  <th>Конец:</th>
+                  {/* <th>Начало:</th>
+                  <th>Конец:</th> */}
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <th>Номер:</th>
-                  <td>{insuranceDetails?.certificate_number}</td>
-                  <th>Серия:</th>
-                  <td>{insuranceDetails?.certificate_series}</td>
-                  <td className={style.date_info}>
-                    {insuranceDetails?.date_begin}
+                  <td>
+                    <input
+                      type="text"
+                      defaultValue={insuranceDetails?.certificate_number || ""}
+                      onChange={(e) =>
+                        updateInsuranceDetails(
+                          "certificate_number",
+                          e.target.value
+                        )
+                      }
+                    />
                   </td>
-                  <td className={style.dateInfo}>
-                    {insuranceDetails?.date_end}
+                  <th>Серия:</th>
+                  <td>
+                    <input
+                      type="text"
+                      defaultValue={insuranceDetails?.certificate_series || ""}
+                      onChange={(e) =>
+                        updateInsuranceDetails(
+                          "certificate_series",
+                          e.target.value
+                        )
+                      }
+                    />
+                  </td>
+                  <th>Начало:</th>
+                  <td>
+                    <input
+                      type="date"
+                      defaultValue={insuranceDetails?.date_begin || ""}
+                      onChange={(e) =>
+                        updateInsuranceDetails("date_begin", e.target.value)
+                      }
+                    />
+                  </td>
+                  <th>Конец:</th>
+
+                  <td>
+                    <input
+                      type="date"
+                      defaultValue={insuranceDetails?.date_end || ""}
+                      onChange={(e) =>
+                        updateInsuranceDetails("date_end", e.target.value)
+                      }
+                    />
                   </td>
                 </tr>
                 <tr>
@@ -405,14 +517,46 @@ const InsuranceDetails = () => {
                 </tr>
                 <tr>
                   <th>Марка:</th>
-                  <td>{insuranceDetails?.car_brand}</td>
+                  <td>
+                    <input
+                      type="text"
+                      defaultValue={insuranceDetails?.car_brand || ""}
+                      onChange={(e) =>
+                        updateInsuranceDetails("car_brand", e.target.value)
+                      }
+                    />
+                  </td>
                   <th>Модель:</th>
-                  <td>{insuranceDetails?.car_model}</td>
+                  <td>
+                    <input
+                      type="text"
+                      defaultValue={insuranceDetails?.car_model || ""}
+                      onChange={(e) =>
+                        updateInsuranceDetails("car_model", e.target.value)
+                      }
+                    />
+                  </td>
                   <td></td>
                   <th>Номер:</th>
-                  <td>{insuranceDetails?.car_region}</td>
+                  <td>
+                    <input
+                      type="text"
+                      defaultValue={insuranceDetails?.car_region || ""}
+                      onChange={(e) =>
+                        updateInsuranceDetails("car_region", e.target.value)
+                      }
+                    />
+                  </td>
                   <th>Регион:</th>
-                  <td>{insuranceDetails?.car_region}</td>
+                  <td>
+                    <input
+                      type="text"
+                      defaultValue={insuranceDetails?.car_region || ""}
+                      onChange={(e) =>
+                        updateInsuranceDetails("car_region", e.target.value)
+                      }
+                    />
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -528,25 +672,50 @@ const InsuranceDetails = () => {
             <hr />
             <div className={style.insurance_detail_driver__info}>
               {insuranceDetails?.status === "draft" && (
-                <button
-                  type="submit"
-                  // name="action"
-                  // value="delete"
-                  onClick={() => {
-                    if (insuranceDetails?.id) {
-                      handleSubmitInsurance(
-                        insuranceDetails.id.toString(),
-                        // driverInsurance.driver.id.toString(),
-                        setError
-                      );
-                    } else {
-                      setError("Невозможно удалить водителя: отсутствует ID.");
-                    }
-                  }}
-                  className={style.insurance_detail__button_delete}
-                >
-                  Оформить страховку
-                </button>
+                <>
+                  <button
+                    type="submit"
+                    // name="action"
+                    // value="delete"
+                    onClick={() => {
+                      if (insuranceDetails?.id) {
+                        handleSubmitInsurance(
+                          insuranceDetails.id.toString(),
+                          // driverInsurance.driver.id.toString(),
+                          setError
+                        );
+                      } else {
+                        setError(
+                          "Невозможно удалить водителя: отсутствует ID."
+                        );
+                      }
+                    }}
+                    className={style.insurance_detail__button_delete}
+                  >
+                    Оформить страховку
+                  </button>
+                  <button
+                    type="submit"
+                    // name="action"
+                    // value="delete"
+                    onClick={() => {
+                      if (insuranceDetails?.id) {
+                        handleDeleteInsurance(
+                          insuranceDetails.id.toString(),
+                          // driverInsurance.driver.id.toString(),
+                          setError
+                        );
+                      } else {
+                        setError(
+                          "Невозможно удалить водителя: отсутствует ID."
+                        );
+                      }
+                    }}
+                    className={style.insurance_detail__button_delete2}
+                  >
+                    Удалить страховку
+                  </button>
+                </>
                 // </form>
               )}
 

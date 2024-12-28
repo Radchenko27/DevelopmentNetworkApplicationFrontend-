@@ -44,7 +44,7 @@
 
 .order-table-header {
   display: grid;
-  grid-template-columns: repeat(5, 1fr) auto; /* 5 колонок для данных + 1 для кнопки */
+  grid-template-columns: repeat(7, 1fr) auto; /* 5 колонок для данных + 1 для кнопки */
   gap: 1rem;
   padding: 1rem;
   font-weight: bold;
@@ -54,7 +54,7 @@
 
 .order-card {
   display: grid;
-  grid-template-columns: repeat(5, 1fr) auto; /* 5 колонок для данных + 1 для кнопки */
+  grid-template-columns: repeat(7, 1fr) auto; /* 5 колонок для данных + 1 для кнопки */
   gap: 1rem;
   padding: 1rem;
   border: 1px solid #ccc;

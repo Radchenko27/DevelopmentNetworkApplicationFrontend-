@@ -82,8 +82,6 @@ const DriversListPage: React.FC = () => {
   };
 
   const handleAddToOrder = async (id: string) => {
-   
-
     // Устанавливаем session_id в куки
 
     console.log(document.cookie);
@@ -128,7 +126,25 @@ const DriversListPage: React.FC = () => {
       <Header />
       <NavBar>
         <IngosLogo />
-        <CollapsibleMenu menuItems={menuItems}>
+        <CollapsibleMenu menuItems={menuItems}></CollapsibleMenu>
+      </NavBar>
+      <div className={styles.main__container}>
+        <h2 className={styles.main_title}>Автострахование онлайн</h2>
+        {/* <SearchForm onSearch={handleSearch} /> */}
+        <form onSubmit={handleSearch} className={styles.search_form}>
+          <input
+            type="text"
+            className={styles.search_input}
+            name="driver_name"
+            placeholder="Поиск по ФИО"
+            value={driverName || ""}
+            onChange={handleChange}
+          />
+          <button type="submit" className={styles.search_button}>
+            Искать
+          </button>
+        </form>
+        <div className={styles.search_block}>
           {localStorage.getItem("isAuthenticated") !== "true" ||
           !draftInsuranceId ? (
             <a href="#" className="header__button">
@@ -142,25 +158,6 @@ const DriversListPage: React.FC = () => {
               Количество водителей: {QuantityOfDrivers}
             </a>
           )}
-        </CollapsibleMenu>
-      </NavBar>
-      <div className={styles.main__container}>
-        <h2 className={styles.main_title}>Автострахование онлайн</h2>
-        {/* <SearchForm onSearch={handleSearch} /> */}
-        <div className={styles.search_block}>
-          <form onSubmit={handleSearch} className={styles.search_form}>
-            <input
-              type="text"
-              className={styles.search_input}
-              name="driver_name"
-              placeholder="Поиск по ФИО"
-              value={driverName || ""}
-              onChange={handleChange}
-            />
-            <button type="submit" className={styles.search_button}>
-              Искать
-            </button>
-          </form>
         </div>
       </div>
 

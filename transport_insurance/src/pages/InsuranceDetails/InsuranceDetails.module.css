@@ -320,3 +320,53 @@ th {
   background-color: #002f87; /* Синий фон при наведении */
   color: #ffffff; /* Белый цвет шрифта при наведении */
 }
+
+.insurance_detail__button_delete2 {
+  align-self: flex-end;
+  display: inline-block; /* Делает ссылку похожей на блок, как кнопка */
+  text-align: center; /* Выравнивание текста по центру */
+  background-color: #ffffff; /* Белый фон кнопки */
+  color: #b04a4a; /* Синий цвет шрифта */
+  border: 1px solid #b04a4a; /* Синяя окантовка */
+  padding: 10px 20px; /* Внутренние отступы */
+  border-radius: 15px; /* Округление углов */
+  font-size: 16px; /* Размер шрифта */
+  font-weight: normal;
+  cursor: pointer; /* Курсор в виде указателя при наведении */
+  text-decoration: none; /* Убирает подчеркивание у ссылки */
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+  width: 300px;
+  margin: 10px 10px;
+}
+
+.insurance_detail__button_delete2:hover {
+  background-color: #b04a4a; /* Синий фон при наведении */
+  color: #ffffff; /* Белый цвет шрифта при наведении */
+}
+
+input[type="text"],
+input[type="date"] {
+  width: 90%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+td input {
+  display: block;
+  margin: auto;
+}

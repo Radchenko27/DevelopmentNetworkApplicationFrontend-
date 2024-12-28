@@ -92,14 +92,16 @@ const InsurancesList = () => {
                   <div className={style["order-card-cell"]}>
                     Номер страховки
                   </div>
+                  <div className={style["order-card-cell"]}>Данные полиса</div>
                   <div className={style["order-card-cell"]}>Статус</div>
-                  <div className={style["order-card-cell"]}>Дата создания</div>
+                  {/* <div className={style["order-card-cell"]}>Дата создания</div> */}
                   <div className={style["order-card-cell"]}>
                     Дата формирования
                   </div>
                   <div className={style["order-card-cell"]}>
                     Дата завершения
                   </div>
+                  <div className={style["order-card-cell"]}>Средний стаж</div>
                   <div className={style["order-card-cell"]}>
                     Ссылка на страховку
                   </div>
@@ -113,6 +115,11 @@ const InsurancesList = () => {
                         Страховка #{insurance.id}
                       </div>
                       <div className={style["order-card-cell"]}>
+                        {insurance.certificate_number +
+                          " " +
+                          insurance.certificate_series}
+                      </div>
+                      <div className={style["order-card-cell"]}>
                         {insurance.status === "draft"
                           ? "Черновик"
                           : insurance.status === "deleted"
@@ -123,9 +130,9 @@ const InsurancesList = () => {
                                 ? "Завершена"
                                 : "Отклонена"}
                       </div>
-                      <div className={style["order-card-cell"]}>
+                      {/* <div className={style["order-card-cell"]}>
                         {formatTime(insurance.date_creation || null)}
-                      </div>
+                      </div> */}
                       <div className={style["order-card-cell"]}>
                         {insurance.date_formation
                           ? formatTime(insurance.date_formation)
@@ -135,6 +142,11 @@ const InsurancesList = () => {
                         {insurance.date_completion
                           ? formatTime(insurance.date_completion)
                           : "Не указана"}
+                      </div>
+                      <div className={style["order-card-cell"]}>
+                        {insurance.average_experience
+                          ? insurance.average_experience
+                          : "Не указан"}
                       </div>
                       <div className={style["order-card-cell"]}>
                         <a
