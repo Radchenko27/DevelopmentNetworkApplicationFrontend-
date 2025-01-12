@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 
 interface DriverNameState {
   driverName: string;
@@ -26,9 +26,9 @@ const dataSlice = createSlice({
       state.draftInsuranceId = action.payload;
     },
     resetDataState(state) {
-      state.driverName = " "; // Сбрасываем минимальную цену // Сбрасываем максимальную цену
-      state.QuantityOfDrivers = 0; // Сбрасываем количество дата-центров
-      state.draftInsuranceId = null; // Сбрасываем ID черновика заказа
+      state.driverName = " "; 
+      state.QuantityOfDrivers = 0; 
+      state.draftInsuranceId = null; 
     },
   },
 });

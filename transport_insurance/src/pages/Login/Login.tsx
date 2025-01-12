@@ -1,50 +1,30 @@
 import React, { useState } from "react";
-import { Api } from "../../api/Api"; // Импортируем API
-import { useDispatch } from "react-redux"; // Для обновления состояния Redux
-import { login } from "../../slices/authSlice"; // Action для сохранения логина
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { RootState } from "../../store";
+import { loginUser } from "../../slices/authSlice";
 import Navbar from "../../components/Navbar/Navbar";
 import IngosLogo from "../../components/Ingoslogo/Ingoslogo";
 import CollapsibleMenu from "../../components/CollapsibleMenu/CollapsibleMenu";
-import Breadcrumb from "../../components/Breadcrumb"; // Импортируем Breadcrumb
-import { useNavigate } from "react-router-dom"; // Для навигации после успешного входа
+import Breadcrumb from "../../components/Breadcrumb";
 import styles from "./Login.module.css";
 
 const Login = () => {
-  const [email, setEmail] = useState<string>(""); // Поле email
-  const [password, setPassword] = useState<string>(""); // Поле пароля
-  const [error, setError] = useState<string>(""); // Ошибка
-  const [loading, setLoading] = useState<boolean>(false); // Состояние загрузки
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const dispatch = useDispatch(); // Используем dispatch для обновления Redux
-  const api = new Api(); // Создаем экземпляр API
-  const navigate = useNavigate(); // Хук для навигации
+  const { isLoading, error } = useSelector((state: RootState) => state.auth);
 
-  // Обработчик отправки формы
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError("");
-
-    try {
-      const response = await api.users.usersLoginCreate({ email, password });
-
-      if (response.data?.session_id) {
-        dispatch(
-          login({ username: email, sessionId: response.data.session_id })
-        );
-        localStorage.setItem("isAuthenticated", "true");
-        localStorage.setItem("email", email);
-        document.cookie = `session_id=${response.data.session_id}; path=/; SameSite=Strict`;
-        navigate("/"); // Перенаправляем на главную страницу после успешного входа
-      } else {
-        setError("Не удалось войти. Проверьте данные и попробуйте снова.");
-      }
-    } catch (err) {
-      setError("Ошибка при аутентификации. Попробуйте позже.");
-    } finally {
-      setLoading(false);
+    const result = await dispatch(loginUser({ email, password }));
+    if (loginUser.fulfilled.match(result)) {
+      navigate("/");
     }
   };
+
   const menuItems = [
     { name: "Главная", path: "/" },
     { name: "Список водителей", path: "/drivers" },
@@ -96,10 +76,10 @@ const Login = () => {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={isLoading}
             className={styles.submit_btn}
           >
-            {loading ? "Загрузка..." : "Войти"}
+            {isLoading ? "Загрузка..." : "Войти"}
           </button>
         </form>
       </div>

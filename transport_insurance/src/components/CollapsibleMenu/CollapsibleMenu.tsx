@@ -35,13 +35,14 @@ const CollapsibleMenu: React.FC<CollapsibleMenuProps> = ({
     (state: RootState) => state.ourData.draftInsuranceId
   );
   const sessionId = useSelector((state: RootState) => state.auth.sessionId); // Получаем sessionId
+  const username = useSelector((state: RootState) => state.auth.user?.username);
   const dispatch = useDispatch();
 
   const toggleMenu = () => {
     setIsOpen((prevState) => !prevState); // Переключение состояния меню
   };
   useEffect(() => {
-    if (localStorage.getItem("isAuthenticated") === "true") {
+    if (isAuthenticated) {
       setMenuItems([
         { name: "Главная", path: "/" },
         { name: "Список водителей", path: "/drivers" },
@@ -73,12 +74,10 @@ const CollapsibleMenu: React.FC<CollapsibleMenuProps> = ({
       );
 
       if (response && response.status === 200) {
-        // Удаляем куки после успешного выхода
-        // deleteSessionCookie();
         dispatch(logout()); // Обновляем Redux-состояние
         dispatch(resetDataState());
-        localStorage.setItem("isAuthenticated", "false");
-        localStorage.removeItem("email");
+        // localStorage.setItem("isAuthenticated", "false");
+        // localStorage.removeItem("email");
         console.log("Выход выполнен успешно");
       } else {
         throw new Error("Ошибка при выходе: неверный ответ от сервера");
@@ -91,7 +90,7 @@ const CollapsibleMenu: React.FC<CollapsibleMenuProps> = ({
 
   return (
     <>
-      <div>{localStorage.getItem("email")}</div>
+      <div>{username}</div>
       <div className="menu-container">
         {children}
         <Navbar bg="light" expand="lg">
@@ -117,7 +116,7 @@ const CollapsibleMenu: React.FC<CollapsibleMenuProps> = ({
               </Nav>
               <Nav className="nav_link"></Nav>
               <Nav className="nav_link">
-                {localStorage.getItem("isAuthenticated") === "true" && (
+                {isAuthenticated && (
                   <Link
                     className="nav_link_r_2"
                     to="/" // Укажите путь для перенаправления после выхода

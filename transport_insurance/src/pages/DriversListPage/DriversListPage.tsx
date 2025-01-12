@@ -19,6 +19,7 @@ import {
   setDraftInsuranceId,
 } from "../../slices/dataSlice";
 import { Api } from "../../api/Api";
+
 const api = new Api();
 
 const breadcrumbItems = [
@@ -49,9 +50,7 @@ const DriversListPage: React.FC = () => {
   );
 
   useEffect(() => {
-    const storedDriverName = localStorage.getItem("driverName");
-    if (storedDriverName) dispatch(setDriverName(storedDriverName));
-
+   
     console.log("Компонент DriversListPage был смонтирован!");
     console.log("isAuthenticated:", isAuthenticated);
     fetchDrivers();
@@ -82,7 +81,6 @@ const DriversListPage: React.FC = () => {
   };
 
   const handleAddToOrder = async (id: string) => {
-    // Устанавливаем session_id в куки
 
     console.log(document.cookie);
     try {
@@ -108,7 +106,7 @@ const DriversListPage: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     dispatch(setDriverName(value));
-    localStorage.setItem("driverName", value);
+    // localStorage.setItem("driverName", value);
   };
 
   const handleSearch = (e: React.FormEvent) => {
@@ -145,8 +143,7 @@ const DriversListPage: React.FC = () => {
           </button>
         </form>
         <div className={styles.search_block}>
-          {localStorage.getItem("isAuthenticated") !== "true" ||
-          !draftInsuranceId ? (
+          {!isAuthenticated || !draftInsuranceId ? (
             <a href="#" className="header__button">
               Текущая страховка недоступна
             </a>
